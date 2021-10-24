@@ -1,5 +1,6 @@
 package com.dnslin.onemanagerjava.utils;
 
+import cn.hutool.core.lang.Console;
 import com.alibaba.fastjson.JSONObject;
 import com.dnslin.onemanagerjava.result.HttpClientResult;
 import org.apache.http.HttpEntity;
@@ -26,16 +27,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
+public class HttpClientUtils {
+    // 编码格式。发送编码格式统一用UTF-8
     private static final String ENCODING = "UTF-8";
 
     // 设置连接超时时间，单位毫秒。
@@ -58,16 +57,18 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
 
             PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(registry);
             cm.setMaxTotal(100);
-            CloseableHttpClient httpclient = HttpClients.custom()
+            return HttpClients.custom()
                     .setSSLSocketFactory(sslConnectionSocketFactory)
                     .setDefaultCookieStore(new BasicCookieStore())
                     .setConnectionManager(cm).build();
-            return httpclient;
         } catch (KeyManagementException e) {
+            Console.log("所有处理密钥管理的操作的通用密钥管理异常");
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
+            Console.log("请求特定加密算法但在环境中不可用");
             e.printStackTrace();
         } catch (KeyStoreException e) {
+            Console.log("通用的KeyStore异常");
             e.printStackTrace();
         }
         return HttpClients.createDefault();
@@ -298,7 +299,7 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
                                               Map<String, String> params,
                                               Map<String, String> headers,
                                               String filePath,
-                                              String fileType) throws Exception {
+                                              String fileType)  {
         final CloseableHttpClient httpClient = HttpClients.createDefault();
         final HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Content-Type", "multipart/form-data");
@@ -307,12 +308,17 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
         final MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         //将文件加在http的post请求中
         final File file = new File(filePath);
-        builder.addBinaryBody(
-                fileType,
-                new FileInputStream(file),
-                ContentType.APPLICATION_OCTET_STREAM,
-                file.getName()
-        );
+        try {
+            builder.addBinaryBody(
+                    fileType,
+                    new FileInputStream(file),
+                    ContentType.APPLICATION_OCTET_STREAM,
+                    file.getName()
+            );
+        } catch (FileNotFoundException e) {
+            Console.log("文件找不到！！！");
+            e.printStackTrace();
+        }
         if (params != null) {
             final JSONObject jsonObject = new JSONObject();
             for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -355,8 +361,7 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
      * @param httpMethod
      * @throws UnsupportedEncodingException
      */
-    public static void packageParam(Map<String, String> params, HttpEntityEnclosingRequestBase httpMethod)
-            throws UnsupportedEncodingException {
+    public static void packageParam(Map<String, String> params, HttpEntityEnclosingRequestBase httpMethod) {
         // 封装请求参数
         if (params != null) {
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
@@ -366,7 +371,12 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
             }
 
             // 设置到请求的http对象中
-            httpMethod.setEntity(new UrlEncodedFormEntity(nvps, ENCODING));
+            try {
+                httpMethod.setEntity(new UrlEncodedFormEntity(nvps, ENCODING));
+            } catch (UnsupportedEncodingException e) {
+                Console.log("不支持字符编码。。。");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -380,15 +390,25 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
      * @throws Exception
      */
     public static HttpClientResult getHttpClientResult(CloseableHttpResponse httpResponse,
-                                                       CloseableHttpClient httpClient, HttpRequestBase httpMethod) throws Exception {
+                                                       CloseableHttpClient httpClient, HttpRequestBase httpMethod) {
         // 执行请求
-        httpResponse = httpClient.execute(httpMethod);
+        try {
+            httpResponse = httpClient.execute(httpMethod);
+        } catch (IOException e) {
+            Console.log("httpClient.execute！！！网络IO异常");
+            e.printStackTrace();
+        }
 
         // 获取返回结果
         if (httpResponse != null && httpResponse.getStatusLine() != null) {
             String content = "";
             if (httpResponse.getEntity() != null) {
-                content = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
+                try {
+                    content = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
+                } catch (IOException e) {
+                    Console.log("IO流异常");
+                    e.printStackTrace();
+                }
             }
             return new HttpClientResult(httpResponse.getStatusLine().getStatusCode(), content);
         }
@@ -402,13 +422,23 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
      * @param httpClient
      * @throws IOException
      */
-    public static void release(CloseableHttpResponse httpResponse, CloseableHttpClient httpClient) throws IOException {
+    public static void release(CloseableHttpResponse httpResponse, CloseableHttpClient httpClient) {
         // 释放资源
         if (httpResponse != null) {
-            httpResponse.close();
-        }
-        if (httpClient != null) {
-            httpClient.close();
+            try {
+                httpResponse.close();
+            } catch (IOException e) {
+                    Console.log("释放资源！！！IO流异常");
+                    e.printStackTrace();
+                }
+            }
+            if (httpClient != null) {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    Console.log("释放资源！！！IO流异常");
+                    e.printStackTrace();
+                }
+            }
         }
     }
-}
