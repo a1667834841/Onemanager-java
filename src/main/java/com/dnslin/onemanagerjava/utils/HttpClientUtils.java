@@ -9,16 +9,30 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
@@ -29,6 +43,35 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
 
     // 请求获取数据的超时时间(即响应时间)，单位毫秒。
     private static final int SOCKET_TIMEOUT = 6000;
+
+    public static CloseableHttpClient getHttpClient() {
+        try {
+            SSLContextBuilder builder = new SSLContextBuilder();
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+            //不进行主机名验证
+            SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(builder.build(),
+                    NoopHostnameVerifier.INSTANCE);
+            Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
+                    .register("http", new PlainConnectionSocketFactory())
+                    .register("https", sslConnectionSocketFactory)
+                    .build();
+
+            PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager(registry);
+            cm.setMaxTotal(100);
+            CloseableHttpClient httpclient = HttpClients.custom()
+                    .setSSLSocketFactory(sslConnectionSocketFactory)
+                    .setDefaultCookieStore(new BasicCookieStore())
+                    .setConnectionManager(cm).build();
+            return httpclient;
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        return HttpClients.createDefault();
+    }
 
     /**
      * 发送get请求；不带请求头和请求参数
@@ -64,7 +107,7 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
      */
     public static HttpClientResult doGet(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
         // 创建httpClient对象
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpClient httpClient = getHttpClient();
 
         // 创建访问的地址
         URIBuilder uriBuilder = new URIBuilder(url);
@@ -135,7 +178,7 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
      */
     public static HttpClientResult doPost(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
         // 创建httpClient对象
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpClient httpClient = getHttpClient();
 
         // 创建http对象
         HttpPost httpPost = new HttpPost(url);
@@ -148,12 +191,6 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
         httpPost.setConfig(requestConfig);
         // 设置请求头
-		/*httpPost.setHeader("Cookie", "");
-		httpPost.setHeader("Connection", "keep-alive");
-		httpPost.setHeader("Accept", "application/json");
-		httpPost.setHeader("Accept-Language", "zh-CN,zh;q=0.9");
-		httpPost.setHeader("Accept-Encoding", "gzip, deflate, br");
-		httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36");*/
         packageHeader(headers, httpPost);
 
         // 封装请求参数
@@ -191,7 +228,7 @@ public class HttpClientUtils {// 编码格式。发送编码格式统一用UTF-8
      * @throws Exception
      */
     public static HttpClientResult doPut(String url, Map<String, String> params) throws Exception {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpClient httpClient = getHttpClient();
         HttpPut httpPut = new HttpPut(url);
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
         httpPut.setConfig(requestConfig);
