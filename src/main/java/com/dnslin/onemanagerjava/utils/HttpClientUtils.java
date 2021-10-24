@@ -28,6 +28,7 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -81,7 +82,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doGet(String url) throws Exception {
+    public static HttpClientResult doGet(String url)  {
         return doGet(url, null, null);
     }
 
@@ -93,7 +94,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doGet(String url, Map<String, String> params) throws Exception {
+    public static HttpClientResult doGet(String url, Map<String, String> params) {
         return doGet(url, null, params);
     }
 
@@ -106,12 +107,18 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doGet(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
+    public static HttpClientResult doGet(String url, Map<String, String> headers, Map<String, String> params) {
         // 创建httpClient对象
         CloseableHttpClient httpClient = getHttpClient();
 
         // 创建访问的地址
-        URIBuilder uriBuilder = new URIBuilder(url);
+        URIBuilder uriBuilder = null;
+        try {
+            uriBuilder = new URIBuilder(url);
+        } catch (URISyntaxException e) {
+            Console.log("链接可能有问题！！！");
+            e.printStackTrace();
+        }
         if (params != null) {
             Set<Map.Entry<String, String>> entrySet = params.entrySet();
             for (Map.Entry<String, String> entry : entrySet) {
@@ -120,7 +127,13 @@ public class HttpClientUtils {
         }
 
         // 创建http对象
-        HttpGet httpGet = new HttpGet(uriBuilder.build());
+        HttpGet httpGet = null;
+        try {
+            httpGet = new HttpGet(uriBuilder.build());
+            Console.log("链接可能有问题！！！");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         /**
          * setConnectTimeout：设置连接超时时间，单位毫秒。
          * setConnectionRequestTimeout：设置从connect Manager(连接池)获取Connection
