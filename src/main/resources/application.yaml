@@ -1,2 +1,16 @@
-server:
-  port: 5678
+spring:
+  profiles:
+    active: dev
+
+#  显示名称
+#  onemanager
+#  应用程序(客户端) ID
+#  2ddd8ff9-1137-407b-91a0-58c4dc661968
+#  对象 ID
+#  92ad486a-276e-41c7-8ecd-009323079221
+#  目录(租户) ID
+#  621017da-95f3-45a6-a020-fbd90fdbdbbf
+#  value
+#  Txh7Q~AO2lgOqLCrjdB52k44LejSjGmJrr.6A
+#  机密 ID
+#  ee1f9e72-73e8-4023-ab10-fd6ed212cb4b
