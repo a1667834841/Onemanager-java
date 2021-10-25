@@ -3,7 +3,7 @@ spring:
     active: dev
 
 #  显示名称
-#  onemanager
+#  OneManAger
 #  应用程序(客户端) ID
 #  2ddd8ff9-1137-407b-91a0-58c4dc661968
 #  对象 ID
