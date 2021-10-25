@@ -4,7 +4,8 @@
 </div>
 
 
-<span align="center"><font size=20>OneManager-Java</font></span>
+
+## OneManager-Java
 
 ### About
 
