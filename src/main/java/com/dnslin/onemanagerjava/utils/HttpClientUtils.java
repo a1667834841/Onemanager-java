@@ -130,8 +130,8 @@ public class HttpClientUtils {
         HttpGet httpGet = null;
         try {
             httpGet = new HttpGet(uriBuilder.build());
-            Console.log("链接可能有问题！！！");
         } catch (URISyntaxException e) {
+            Console.log("链接可能有问题！！！");
             e.printStackTrace();
         }
         /**
