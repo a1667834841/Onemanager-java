@@ -1,6 +1,6 @@
-package com.dnslin.onemanagerjava.logic.impl;
+package com.dnslin.onemanager.logic.impl;
 
-import com.dnslin.onemanagerjava.logic.AuthToken;
+import com.dnslin.onemanager.logic.AuthToken;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;

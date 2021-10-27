@@ -1,4 +1,4 @@
-package com.dnslin.onemanagerjava.logic;
+package com.dnslin.onemanager.logic;
 
 /**
  * AuthToken

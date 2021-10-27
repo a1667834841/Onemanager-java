@@ -5,6 +5,6 @@ spring:
 logging:
   level:
     root: info
-    com.dnslin.dnslin_api: debug
+    com.dnslin.onemanager: debug
 server:
   port: 5678

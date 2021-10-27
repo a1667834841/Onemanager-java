@@ -1,7 +1,7 @@
-package com.dnslin.onemanagerjava.logic.impl;
+package com.dnslin.onemanager.logic.impl;
 
 import cn.hutool.core.util.RandomUtil;
-import com.dnslin.onemanagerjava.logic.AuthUrl;
+import com.dnslin.onemanager.logic.AuthUrl;
 
 
 public class AuthUrlImpl implements AuthUrl {

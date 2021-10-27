@@ -1,4 +1,4 @@
-package com.dnslin.onemanagerjava.config;
+package com.dnslin.onemanager.config;
 
 
 import com.google.common.base.Predicates;

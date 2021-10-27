@@ -1,8 +1,8 @@
-package com.dnslin.onemanagerjava.test;
+package com.dnslin.onemanager.test;
 
 import cn.hutool.core.util.RandomUtil;
-import com.dnslin.onemanagerjava.result.HttpClientResult;
-import com.dnslin.onemanagerjava.utils.HttpClientUtils;
+import com.dnslin.onemanager.result.HttpClientResult;
+import com.dnslin.onemanager.utils.HttpClientUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

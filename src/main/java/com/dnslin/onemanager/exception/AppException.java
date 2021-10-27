@@ -1,8 +1,8 @@
-package com.dnslin.onemanagerjava.exception;
+package com.dnslin.onemanager.exception;
 
 
 
-import com.dnslin.onemanagerjava.result.ResponseEnum;
+import com.dnslin.onemanager.result.ResponseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.dnslin.onemanagerjava;
+package com.dnslin.onemanager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

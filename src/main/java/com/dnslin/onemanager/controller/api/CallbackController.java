@@ -1,4 +1,4 @@
-package com.dnslin.onemanagerjava.controller.api;
+package com.dnslin.onemanager.controller.api;
 
 import cn.hutool.core.lang.Console;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api")
 @CrossOrigin
 public class CallbackController extends HttpServlet {
+    /**
+    *
+     * @Description: 
+     * @param: request 
+     * @return void
+     * @author DnsLin
+     * @date 2021/10/27 15:35
+    */
     @GetMapping("/auth")
     public void authCallback(HttpServletRequest request){
         if (request!=null){

@@ -1,4 +1,4 @@
-package com.dnslin.onemanagerjava;
+package com.dnslin.onemanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

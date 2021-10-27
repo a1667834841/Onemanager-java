@@ -1,4 +1,4 @@
-package com.dnslin.onemanagerjava.result;
+package com.dnslin.onemanager.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,8 +1,8 @@
-package com.dnslin.onemanagerjava.utils;
+package com.dnslin.onemanager.utils;
 
 import cn.hutool.core.lang.Console;
 import com.alibaba.fastjson.JSONObject;
-import com.dnslin.onemanagerjava.result.HttpClientResult;
+import com.dnslin.onemanager.result.HttpClientResult;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -34,6 +34,14 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+    /**
+     * 功能描述
+     *  httpclient 工具类
+     * @author dnslin
+     * @date 10/27
+     * @param  
+     * @return 
+     */
 public class HttpClientUtils {
     // 编码格式。发送编码格式统一用UTF-8
     private static final String ENCODING = "UTF-8";

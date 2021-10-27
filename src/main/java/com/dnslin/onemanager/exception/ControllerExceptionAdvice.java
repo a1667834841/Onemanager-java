@@ -1,10 +1,10 @@
-package com.dnslin.onemanagerjava.exception;
+package com.dnslin.onemanager.exception;
 
 
 
 
-import com.dnslin.onemanagerjava.result.R;
-import com.dnslin.onemanagerjava.result.ResponseEnum;
+import com.dnslin.onemanager.result.R;
+import com.dnslin.onemanager.result.ResponseEnum;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
