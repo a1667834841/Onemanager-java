@@ -12,10 +12,10 @@ public interface AuthToken {
      * 功能描述 
      * @author dnslin
      * @date 10/25
-     * @param  client_id
-     * @param  redirect_uri
+     * @param  clientId
+     * @param  redirectUri
      * @return
      */
-    String getAccessToken();
+    String getAccessToken(String clientId, String redirectUri);
     String getRefreshToken();
 }

@@ -19,7 +19,7 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
     private final ServletContext context = this.getServletContext();
 
     @Override
-    public String getAccessToken() {
+    public String getAccessToken(String clientId, String redirectUri) {
         String code  = (String)context.getAttribute("code");
         if (code != null && !code.isEmpty()){
 

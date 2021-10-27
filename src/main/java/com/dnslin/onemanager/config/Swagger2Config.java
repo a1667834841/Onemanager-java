@@ -17,10 +17,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Swagger2Config {
 
     /**
-     *  定义接口的总体信息
-     *  用户
-     * @return
-     */
+    *
+     * @Description: 定义接口的总体信息
+     * @param:  用户
+     * @return springfox.documentation.service.ApiInfo
+     * @author DnsLin
+     * @date 2021/10/27 20:21
+    */
     private ApiInfo webApiInfo(){
 
         return new ApiInfoBuilder()
@@ -45,11 +48,14 @@ public class Swagger2Config {
     public Docket webApiConfig(){
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("webApi") // 用户组
-                .apiInfo(webApiInfo()) // 组的信息
+                // 用户组
+                .groupName("webApi")
+                // 组的信息
+                .apiInfo(webApiInfo())
                 .select()
                 //只显示api路径下的页面
-                .paths(Predicates.and(PathSelectors.regex("/api/.*")))  // 用户接口的判断
+                // 用户接口的判断
+                .paths(Predicates.and(PathSelectors.regex("/api/.*")))
                 .build();
 
     }
@@ -58,8 +64,10 @@ public class Swagger2Config {
     public Docket adminApiConfig(){
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("adminApi") // 管路⚪组
-                .apiInfo(adminApiInfo()) // 组的信息
+                // 管路⚪组
+                .groupName("adminApi")
+                // 组的信息
+                .apiInfo(adminApiInfo())
                 .select()
                 //只显示admin路径下的页面
                 .paths(Predicates.and(PathSelectors.regex("/admin/.*")))

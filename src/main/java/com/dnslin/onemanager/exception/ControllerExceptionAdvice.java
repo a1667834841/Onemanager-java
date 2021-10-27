@@ -11,15 +11,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
-// 这是一个controller 的增强类【专门在controller 抛出异常的时候  增强】
+/**
+*
+ * @Description: controller 的增强类 专门在controller 抛出异常的时候增强
+ * @param: null
+ * @return * @return null
+ * @author DnsLin
+ * @date 2021/10/27 20:23
+*/
 @ControllerAdvice
 public class ControllerExceptionAdvice {
 
+
     /**
-     *  如果抛出的是 AppException 的增强
-     *  返回值 就是返回的页面
-     *  参数： controller 抛出的异常
-     */
+    *
+     * @Description: 如果抛出的是 AppException 的增强
+     * @param: AppException controller抛出的异常
+     * @param: request 
+     * @return R
+     * @author DnsLin
+     * @date 2021/10/27 20:24
+    */
     @ExceptionHandler(AppException.class)
     @ResponseBody
     public R appExceptionHandler(AppException ex, HttpServletRequest request){
@@ -30,6 +42,15 @@ public class ControllerExceptionAdvice {
     /**
      *  如果抛出的是Exception 的增强
      */
+    /**
+    *
+     * @Description:
+     * @param: Exception
+     * @param: request
+     * @return R
+     * @author DnsLin
+     * @date 2021/10/27 20:25
+    */
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public R exceptionHandler(Exception ex, HttpServletRequest request){
