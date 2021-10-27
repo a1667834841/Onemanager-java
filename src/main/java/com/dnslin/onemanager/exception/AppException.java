@@ -9,8 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *  业务异常类
- */
+ * @return 异常枚举类
+ * @author DnsLin
+ * @date 2021/10/27 20:20
+*/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
