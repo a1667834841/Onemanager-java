@@ -1,6 +1,8 @@
 package com.dnslin.onemanager.logic.impl;
 
+import com.dnslin.onemanager.exception.AppException;
 import com.dnslin.onemanager.logic.AuthToken;
+import com.dnslin.onemanager.result.ResponseEnum;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +24,7 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
     public String getAccessToken(String clientId, String redirectUri) {
         String code  = (String)context.getAttribute("code");
         if (code != null && !code.isEmpty()){
-
+            throw new AppException(ResponseEnum.SYSTEM_ERROR);
         }
         return null;
     }
