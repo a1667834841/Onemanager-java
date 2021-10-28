@@ -173,7 +173,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPost(String url) throws Exception {
+    public static HttpClientResult doPost(String url)  {
         return doPost(url, null, null);
     }
 
@@ -185,7 +185,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPost(String url, Map<String, String> params) throws Exception {
+    public static HttpClientResult doPost(String url, Map<String, String> params) {
         return doPost(url, null, params);
     }
 
@@ -198,7 +198,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPost(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
+    public static HttpClientResult doPost(String url, Map<String, String> headers, Map<String, String> params) {
         // 创建httpClient对象
         CloseableHttpClient httpClient = getHttpClient();
 
@@ -237,7 +237,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPut(String url) throws Exception {
+    public static HttpClientResult doPut(String url)  {
         return doPut(url);
     }
 
@@ -249,7 +249,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPut(String url, Map<String, String> params) throws Exception {
+    public static HttpClientResult doPut(String url, Map<String, String> params)  {
         CloseableHttpClient httpClient = getHttpClient();
         HttpPut httpPut = new HttpPut(url);
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
