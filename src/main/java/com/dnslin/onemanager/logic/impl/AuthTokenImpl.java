@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author dnslin
  * @date 2021/10/25 20:10
- * @ProjectName: Onemanager-java
+ * @ProjectName: OneManager-java
  * @url: https://login.microsoftonline.com/common/oauth2/v2.0/token
  * @return AuthToken
  * @Version 1.0
