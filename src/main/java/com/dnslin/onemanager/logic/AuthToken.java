@@ -9,13 +9,14 @@ package com.dnslin.onemanager.logic;
  */
 public interface AuthToken {
     /**
-     * 功能描述 
+     * 获取AccessToken
      * @author dnslin
      * @date 10/25
      * @param  clientId
      * @param  redirectUri
+     * @param clientSecret
      * @return
      */
-    String getAccessToken(String clientId, String redirectUri);
+    void getAccessToken(String clientId, String redirectUri,String clientSecret);
     String getRefreshToken();
 }

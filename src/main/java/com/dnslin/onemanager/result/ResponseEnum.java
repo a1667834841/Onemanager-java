@@ -10,7 +10,8 @@ public enum ResponseEnum {
     Cookie_not_found("4004","Cookie获取失败"),
     Token_invalid("4005","Token失效"),
     PARAMETERS_ARE_MISSING("4006","参数缺失"),
-    AUTH_CODE_ISNULL("4007","Auth Code 为空");
+    AUTH_CODE_ISNULL("4007","Auth Code 为空"),
+    THE_RESULT_SET_IS_EMPTY("4008","请求结果集为Null,请联系管理员");
 
 
     private String code;

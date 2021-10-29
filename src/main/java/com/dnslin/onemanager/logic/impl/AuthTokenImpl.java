@@ -1,5 +1,7 @@
 package com.dnslin.onemanager.logic.impl;
 
+import cn.hutool.core.lang.Console;
+import com.alibaba.fastjson.JSONObject;
 import com.dnslin.onemanager.exception.AppException;
 import com.dnslin.onemanager.logic.AuthToken;
 import com.dnslin.onemanager.result.ResponseEnum;
@@ -24,14 +26,26 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
     private final ServletContext context = this.getServletContext();
 
     @Override
-    public String getAccessToken(String clientId, String redirectUri) {
-        String code  = (String)context.getAttribute("code");
-        if (code == null || code.isEmpty()){
-            throw new AppException(ResponseEnum.SYSTEM_ERROR);
+    public void getAccessToken(String clientId, String redirectUri, String clientSecret) {
+        String code = (String) context.getAttribute("code");
+        if (code == null || code.isEmpty()) {
+            throw new AppException(ResponseEnum.AUTH_CODE_ISNULL);
         }
         Map<String, String> param = new HashMap<String, String>();
-        HttpClientUtils.doPost("",param);
-        return null;
+        param.put("client_id", clientId);
+        param.put("scope", "files.readwrite.all files.readwrite offline_access");
+        param.put("code", code);
+        param.put("redirect_uri", redirectUri);
+        param.put("grant_type", "authorization_code");
+        param.put("client_secret", clientSecret);
+        String accessJson = HttpClientUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent();
+        if (accessJson == null || accessJson.isEmpty()) {
+            throw new AppException(ResponseEnum.THE_RESULT_SET_IS_EMPTY);
+        }
+        Console.log("结果集accessJson:==>" + accessJson);
+        String access_token = JSONObject.parseObject(accessJson).getString("access_token");
+        Console.log("Access_token:==>" + access_token);
+        context.setAttribute("access_token",access_token);
     }
 
     @Override
