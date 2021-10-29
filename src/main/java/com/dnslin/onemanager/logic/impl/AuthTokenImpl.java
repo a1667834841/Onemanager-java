@@ -4,7 +4,6 @@ import com.dnslin.onemanager.exception.AppException;
 import com.dnslin.onemanager.logic.AuthToken;
 import com.dnslin.onemanager.result.ResponseEnum;
 import com.dnslin.onemanager.utils.HttpClientUtils;
-import org.springframework.web.servlet.tags.Param;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
