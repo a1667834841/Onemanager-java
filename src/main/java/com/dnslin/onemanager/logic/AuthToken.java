@@ -18,5 +18,16 @@ public interface AuthToken {
      * @return
      */
     void getAccessToken(String clientId, String redirectUri,String clientSecret);
-    String getRefreshToken();
+
+    /**
+    *  刷新Refresh_token和AccessToken
+     * @Description:
+     * @param: clientId
+     * @param: redirectUri
+     * @param: clientSecret
+     * @return java.lang.String
+     * @author DnsLin
+     * @date 2021/10/29 23:38
+    */
+    void getRefreshToken(String clientId, String redirectUri,String clientSecret);
 }

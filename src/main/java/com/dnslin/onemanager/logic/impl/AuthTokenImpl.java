@@ -38,18 +38,46 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         param.put("redirect_uri", redirectUri);
         param.put("grant_type", "authorization_code");
         param.put("client_secret", clientSecret);
-        String accessJson = HttpClientUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent();
+        extracted(HttpClientUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent());
+    }
+
+    @Override
+    public void getRefreshToken(String clientId, String redirectUri, String clientSecret) {
+        if ((context.getAttribute("refresh_token") == null && context.getAttribute("refresh_token").toString().isEmpty()) || (context.getAttribute("access_token") == null && context.getAttribute("access_token").toString().isEmpty())) {
+            Console.log("Refresh_token:==>" + context.getAttribute("refresh_token"));
+            Console.log("Access_token:==>" + context.getAttribute("access_token"));
+            throw new AppException(ResponseEnum.Token_invalid);
+        }
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("client_id", clientId);
+        param.put("scope", "files.readwrite.all files.readwrite offline_access");
+        param.put("refresh_token", context.getAttribute("refresh_token").toString());
+        param.put("redirect_uri", redirectUri);
+        param.put("grant_type", "refresh_token");
+        param.put("client_secret", clientSecret);
+        extracted(HttpClientUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent());
+    }
+
+    /**
+     *   抽出重复代码
+     * @Description:
+     * @param: accessJson
+     * @return void
+     * @author DnsLin
+     * @date 2021/10/29 23:55
+     */
+    private void extracted(String accessJson) {
         if (accessJson == null || accessJson.isEmpty()) {
             throw new AppException(ResponseEnum.THE_RESULT_SET_IS_EMPTY);
         }
         Console.log("结果集accessJson:==>" + accessJson);
         String access_token = JSONObject.parseObject(accessJson).getString("access_token");
+        String refresh_token = JSONObject.parseObject(accessJson).getString("refresh_token");
         Console.log("Access_token:==>" + access_token);
-        context.setAttribute("access_token",access_token);
+        Console.log("Refresh_token:==>" + refresh_token);
+        context.setAttribute("access_token", access_token);
+        context.setAttribute("refresh_token", refresh_token);
     }
 
-    @Override
-    public String getRefreshToken() {
-        return null;
-    }
+
 }
