@@ -6,6 +6,7 @@ import com.dnslin.onemanager.exception.AppException;
 import com.dnslin.onemanager.logic.AuthToken;
 import com.dnslin.onemanager.result.ResponseEnum;
 import com.dnslin.onemanager.utils.HttpClientUtils;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,7 @@ import java.util.Map;
  * @return AuthToken
  * @Version 1.0
  */
+@Service
 public class AuthTokenImpl extends HttpServlet implements AuthToken {
     private final ServletContext context = this.getServletContext();
 
@@ -59,10 +61,11 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
     }
 
     /**
-     *   抽出重复代码
+     * 抽出重复代码
+     *
+     * @return void
      * @Description:
      * @param: accessJson
-     * @return void
      * @author DnsLin
      * @date 2021/10/29 23:55
      */
@@ -78,6 +81,4 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         context.setAttribute("access_token", access_token);
         context.setAttribute("refresh_token", refresh_token);
     }
-
-
 }
