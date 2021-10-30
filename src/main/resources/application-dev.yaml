@@ -1,7 +1,17 @@
 spring:
-  devtools:
-    restart:
-      additional-paths: src/main/java
+  datasource:
+    druid:
+      url: jdbc:mysql://sql.dnslin.com:3306/rcba?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: root
+      initial-size: 10
+      max-active: 50
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
 logging:
   level:
     root: info

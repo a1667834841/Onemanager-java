@@ -20,12 +20,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TimeToRefresh {
+
     @Autowired
     private AuthToken authToken;
 
     @Scheduled(fixedRate = 1000 * 60 * 29, initialDelay = 1000 * 290)
-    public void runGetRefreshToken(String clientId, String redirectUri,String clientSecret){
-        authToken.getRefreshToken(clientId,redirectUri,clientSecret);
+    public void runGetToken(){
+//        authToken.getRefreshToken(clientId,redirectUri,clientSecret);
     }
 
 }
