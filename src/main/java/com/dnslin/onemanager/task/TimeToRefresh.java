@@ -1,15 +1,13 @@
-package com.dnslin.onemanager.task;/**
- * @author: DnsLin
- * @Title: TimeToRefresh
- * @ProjectName: Onemanager-java
- * @Description:
- * @date: 2021/10/30 0:12
- */
+package com.dnslin.onemanager.task;
 
 import com.dnslin.onemanager.logic.AuthToken;
+import com.dnslin.onemanager.pojo.Onedriveconfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
 
 /**
  * @author: DnsLin
@@ -19,14 +17,17 @@ import org.springframework.stereotype.Component;
  * @date: 2021/10/30 0:12
  */
 @Component
-public class TimeToRefresh {
+public class TimeToRefresh extends HttpServlet {
 
     @Autowired
     private AuthToken authToken;
 
+    private final ServletContext context = this.getServletContext();
+
     @Scheduled(fixedRate = 1000 * 60 * 29, initialDelay = 1000 * 290)
-    public void runGetToken(){
-//        authToken.getRefreshToken(clientId,redirectUri,clientSecret);
+    public void runGetToken() {
+        Onedriveconfig config = (Onedriveconfig) context.getAttribute("OnedriveConfig");
+        authToken.getRefreshToken(config);
     }
 
 }

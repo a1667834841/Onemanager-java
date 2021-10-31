@@ -85,9 +85,7 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         Console.log("Refresh_token:==>" + refresh_token);
         config.setAccesstoken(access_token);
         config.setRefreshtoken(refresh_token);
-        context.setAttribute("access_token", access_token);
-        context.setAttribute("refresh_token", refresh_token);
-
+        context.setAttribute("OnedriveConfig", config);
         saveConfig.saveOnedriveConfig(config);
     }
 }
