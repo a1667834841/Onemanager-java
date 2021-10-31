@@ -1,6 +1,8 @@
 package com.dnslin.onemanager.controller.api;
 
 import cn.hutool.core.lang.Console;
+import com.dnslin.onemanager.exception.AppException;
+import com.dnslin.onemanager.result.ResponseEnum;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +26,14 @@ public class CallbackController extends HttpServlet {
     */
     @GetMapping("/auth")
     public void authCallback(HttpServletRequest request){
-        if (request!=null){
-            String code = request.getParameter("code");
-            String state = request.getParameter("state");
-            ServletContext servletContext = this.getServletConfig().getServletContext();
-            servletContext.setAttribute("code",code);
-            servletContext.setAttribute("state",state);
-            return;
+        if (request==null){
+            Console.log("request为空！！！");
+            throw new AppException(ResponseEnum.THE_CALLBACK_FAILED);
         }
-         Console.log("request为空！！！");
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
+        ServletContext servletContext = this.getServletConfig().getServletContext();
+        servletContext.setAttribute("code",code);
+        servletContext.setAttribute("state",state);
     }
 }

@@ -13,6 +13,7 @@ public enum ResponseEnum {
     AUTH_CODE_ISNULL("4007","Auth Code 为空"),
     THE_RESULT_SET_IS_EMPTY("4008","请求结果集为Null,请联系管理员"),
     OBJECT_IS_EMPTY("4009","OnedriveConfig实例为NULL"),
+    THE_CALLBACK_FAILED("4010","回调函数失败"),
     UPDATE_FAILED("6001","更新失败"),
     INSERT_THE_FAILURE("6002","插入失败"),
     THE_QUERY_FAILS("6003","查询失败"),
