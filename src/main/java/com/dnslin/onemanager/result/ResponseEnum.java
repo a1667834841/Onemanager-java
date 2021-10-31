@@ -11,7 +11,12 @@ public enum ResponseEnum {
     Token_invalid("4005","Token失效"),
     PARAMETERS_ARE_MISSING("4006","参数缺失"),
     AUTH_CODE_ISNULL("4007","Auth Code 为空"),
-    THE_RESULT_SET_IS_EMPTY("4008","请求结果集为Null,请联系管理员");
+    THE_RESULT_SET_IS_EMPTY("4008","请求结果集为Null,请联系管理员"),
+    OBJECT_IS_EMPTY("4009","OnedriveConfig实例为NULL"),
+    UPDATE_FAILED("6001","更新失败"),
+    INSERT_THE_FAILURE("6002","插入失败"),
+    THE_QUERY_FAILS("6003","查询失败"),
+    FAIL_TO_DELETE("6004","删除失败");
 
 
     private String code;
