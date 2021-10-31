@@ -1,5 +1,7 @@
 package com.dnslin.onemanager.logic;
 
+import com.dnslin.onemanager.pojo.Onedriveconfig;
+
 /**
  * AuthToken
  * @author dnslin
@@ -7,27 +9,25 @@ package com.dnslin.onemanager.logic;
  * @ProjectName: Onemanager-java
  * @Version 1.0
  */
+
 public interface AuthToken {
-    /**
-     * 获取AccessToken
-     * @author dnslin
-     * @date 10/25
-     * @param  clientId
-     * @param  redirectUri
-     * @param clientSecret
-     * @return
-     */
-    void getAccessToken(String clientId, String redirectUri,String clientSecret);
+   /**
+   *
+    * @Description: 获取AccessToken
+    * @param: config
+    * @return void
+    * @author DnsLin
+    * @date 2021/10/31 18:40
+   */
+    void getAccessToken(Onedriveconfig config);
 
     /**
-    *  刷新Refresh_token和AccessToken
-     * @Description:
-     * @param: clientId
-     * @param: redirectUri
-     * @param: clientSecret
-     * @return java.lang.String
+     *
+     * @Description: 刷新Refresh_token和AccessToken
+     * @param: config
+     * @return void
      * @author DnsLin
-     * @date 2021/10/29 23:38
-    */
-    void getRefreshToken(String clientId, String redirectUri,String clientSecret);
+     * @date 2021/10/31 18:40
+     */
+    void getRefreshToken(Onedriveconfig config);
 }
