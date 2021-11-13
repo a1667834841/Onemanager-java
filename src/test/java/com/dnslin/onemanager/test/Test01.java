@@ -1,8 +1,8 @@
 package com.dnslin.onemanager.test;
 
 import cn.hutool.core.util.RandomUtil;
-import com.dnslin.onemanager.result.HttpClientResult;
-import com.dnslin.onemanager.utils.HttpClientUtils;
+import com.dnslin.Utils.logic.HttpUtils;
+import com.dnslin.Utils.result.HttpClientResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +19,7 @@ public class Test01 {
         System.out.println("test run .....");
         Map<String, String> map = new HashMap<>();
         map.put("foo", "bar");
-        HttpClientResult httpClientResult = HttpClientUtils.doGet("https://baidu.com",map);
+        HttpClientResult httpClientResult = HttpUtils.doGet("https://baidu.com",map);
         System.out.println(httpClientResult.getContent());
         System.out.println(httpClientResult.getCode());
     }

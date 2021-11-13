@@ -20,14 +20,14 @@ import javax.servlet.http.HttpServlet;
 public class TimeToRefresh extends HttpServlet {
 
     @Autowired
-    private AuthToken authToken;
+    private AuthToken authTokenImpl;
 
     private final ServletContext context = this.getServletContext();
 
     @Scheduled(fixedRate = 1000 * 60 * 29, initialDelay = 1000 * 290)
     public void runGetToken() {
         Onedriveconfig config = (Onedriveconfig) context.getAttribute("OnedriveConfig");
-        authToken.getRefreshToken(config);
+        authTokenImpl.getRefreshToken(config);
     }
 
 }

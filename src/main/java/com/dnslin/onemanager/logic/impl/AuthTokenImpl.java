@@ -2,12 +2,12 @@ package com.dnslin.onemanager.logic.impl;
 
 import cn.hutool.core.lang.Console;
 import com.alibaba.fastjson.JSONObject;
+import com.dnslin.Utils.logic.HttpUtils;
 import com.dnslin.onemanager.exception.AppException;
 import com.dnslin.onemanager.logic.AuthToken;
 import com.dnslin.onemanager.pojo.Onedriveconfig;
 import com.dnslin.onemanager.result.ResponseEnum;
 import com.dnslin.onemanager.service.SaveConfig;
-import com.dnslin.onemanager.utils.HttpClientUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +45,7 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         param.put("redirect_uri", config.getRedirecturl());
         param.put("grant_type", "authorization_code");
         param.put("client_secret", config.getRedirecturl());
-        extracted(HttpClientUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(),null);
+        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(),null);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         param.put("redirect_uri", config.getRedirecturl());
         param.put("grant_type", "refresh_token");
         param.put("client_secret", config.getRedirecturl());
-        extracted(HttpClientUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(),config);
+        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(),config);
     }
 
     /**
