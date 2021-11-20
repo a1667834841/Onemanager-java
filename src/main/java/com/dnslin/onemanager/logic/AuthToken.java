@@ -2,6 +2,8 @@ package com.dnslin.onemanager.logic;
 
 import com.dnslin.onemanager.pojo.Onedriveconfig;
 
+import java.io.IOException;
+
 /**
  * AuthToken
  * @author dnslin
@@ -19,7 +21,7 @@ public interface AuthToken {
     * @author DnsLin
     * @date 2021/10/31 18:40
    */
-    void getAccessToken(Onedriveconfig config);
+    void getAccessToken(Onedriveconfig config) throws IOException;
 
     /**
      *
@@ -29,5 +31,5 @@ public interface AuthToken {
      * @author DnsLin
      * @date 2021/10/31 18:40
      */
-    void getRefreshToken(Onedriveconfig config);
+    void getRefreshToken(Onedriveconfig config) throws IOException;
 }

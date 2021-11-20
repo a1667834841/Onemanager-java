@@ -2,8 +2,9 @@ package com.dnslin.onemanager.logic.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.dnslin.onemanager.logic.AuthUrl;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class AuthUrlImpl implements AuthUrl {
 
     /**

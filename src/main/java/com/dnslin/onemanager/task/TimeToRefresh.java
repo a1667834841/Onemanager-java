@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
+import java.io.IOException;
 
 /**
  * @author: DnsLin
@@ -25,7 +26,7 @@ public class TimeToRefresh extends HttpServlet {
     private final ServletContext context = this.getServletContext();
 
     @Scheduled(fixedRate = 1000 * 60 * 29, initialDelay = 1000 * 290)
-    public void runGetToken() {
+    public void runGetToken() throws IOException {
         Onedriveconfig config = (Onedriveconfig) context.getAttribute("OnedriveConfig");
         authTokenImpl.getRefreshToken(config);
     }

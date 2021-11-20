@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,8 +33,9 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
 
     @Autowired
     private SaveConfig saveConfig;
+
     @Override
-    public void getAccessToken(Onedriveconfig config) {
+    public void getAccessToken(Onedriveconfig config) throws IOException {
         String code = (String) context.getAttribute("code");
         if (code == null || code.isEmpty()) {
             throw new AppException(ResponseEnum.AUTH_CODE_ISNULL);
@@ -45,11 +47,11 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         param.put("redirect_uri", config.getRedirecturl());
         param.put("grant_type", "authorization_code");
         param.put("client_secret", config.getRedirecturl());
-        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(),null);
+        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(), null);
     }
 
     @Override
-    public void getRefreshToken(Onedriveconfig config) {
+    public void getRefreshToken(Onedriveconfig config) throws IOException {
         if ((context.getAttribute("refresh_token") == null && context.getAttribute("refresh_token").toString().isEmpty()) || (context.getAttribute("access_token") == null && context.getAttribute("access_token").toString().isEmpty())) {
             Console.log("Refresh_token:==>" + context.getAttribute("refresh_token"));
             Console.log("Access_token:==>" + context.getAttribute("access_token"));
@@ -62,7 +64,7 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         param.put("redirect_uri", config.getRedirecturl());
         param.put("grant_type", "refresh_token");
         param.put("client_secret", config.getRedirecturl());
-        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(),config);
+        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(), config);
     }
 
     /**
@@ -74,7 +76,7 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
      * @author DnsLin
      * @date 2021/10/29 23:55
      */
-    private void extracted(String accessJson,Onedriveconfig config) {
+    private void extracted(String accessJson, Onedriveconfig config) {
         if (accessJson == null || accessJson.isEmpty()) {
             throw new AppException(ResponseEnum.THE_RESULT_SET_IS_EMPTY);
         }
