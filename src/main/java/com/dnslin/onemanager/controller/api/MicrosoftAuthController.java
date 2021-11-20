@@ -8,12 +8,12 @@ package com.dnslin.onemanager.controller.api;
  * @date: 2021/11/14 12:54
  */
 
-import cn.hutool.core.lang.Console;
 import com.dnslin.onemanager.logic.AuthToken;
 import com.dnslin.onemanager.logic.AuthUrl;
 import com.dnslin.onemanager.pojo.Onedriveconfig;
 import com.dnslin.onemanager.result.R;
 import com.dnslin.onemanager.result.ResponseEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +26,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
+@Slf4j
 public class MicrosoftAuthController {
 
     @Autowired
@@ -41,7 +42,7 @@ public class MicrosoftAuthController {
             try {
                 authToken.getRefreshToken(config);
             } catch (IOException e) {
-                Console.log("调取链接出现IO异常");
+                log.info ("调取链接出现IO异常");
                 e.printStackTrace();
             }
         }

@@ -1,6 +1,5 @@
 package com.dnslin.onemanager.logic.impl;
 
-import cn.hutool.core.lang.Console;
 import com.alibaba.fastjson.JSONObject;
 import com.dnslin.Utils.logic.HttpUtils;
 import com.dnslin.onemanager.exception.AppException;
@@ -8,6 +7,7 @@ import com.dnslin.onemanager.logic.AuthToken;
 import com.dnslin.onemanager.pojo.Onedriveconfig;
 import com.dnslin.onemanager.result.ResponseEnum;
 import com.dnslin.onemanager.service.SaveConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @Service
+@Slf4j
 public class AuthTokenImpl extends HttpServlet implements AuthToken {
     private final ServletContext context = this.getServletContext();
 
@@ -53,8 +54,8 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
     @Override
     public void getRefreshToken(Onedriveconfig config) throws IOException {
         if ((context.getAttribute("refresh_token") == null && context.getAttribute("refresh_token").toString().isEmpty()) || (context.getAttribute("access_token") == null && context.getAttribute("access_token").toString().isEmpty())) {
-            Console.log("Refresh_token:==>" + context.getAttribute("refresh_token"));
-            Console.log("Access_token:==>" + context.getAttribute("access_token"));
+            log.info("Refresh_token:==>" + context.getAttribute("refresh_token"));
+            log.info("Access_token:==>" + context.getAttribute("access_token"));
             throw new AppException(ResponseEnum.Token_invalid);
         }
         Map<String, String> param = new HashMap<String, String>();
@@ -80,11 +81,11 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         if (accessJson == null || accessJson.isEmpty()) {
             throw new AppException(ResponseEnum.THE_RESULT_SET_IS_EMPTY);
         }
-        Console.log("结果集accessJson:==>" + accessJson);
+        log.info("结果集accessJson:==>" + accessJson);
         String access_token = JSONObject.parseObject(accessJson).getString("access_token");
         String refresh_token = JSONObject.parseObject(accessJson).getString("refresh_token");
-        Console.log("Access_token:==>" + access_token);
-        Console.log("Refresh_token:==>" + refresh_token);
+        log.info("Access_token:==>" + access_token);
+        log.info("Refresh_token:==>" + refresh_token);
         config.setAccesstoken(access_token);
         config.setRefreshtoken(refresh_token);
         context.setAttribute("OnedriveConfig", config);

@@ -2,9 +2,11 @@ package com.dnslin.onemanager.logic.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.dnslin.onemanager.logic.AuthUrl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class AuthUrlImpl implements AuthUrl {
 
     /**
