@@ -16,9 +16,6 @@
 ### TODO
 
 - [X] 获取onedrive token (secreteId->code->token)
-
 - [ ] 使用java 调用onedrive接口  获取文件目录信息，获取文件内容
-
 - [ ] 使用vue 展示网盘目录信息，文件内容
-
 - [ ] 定时任务 将指定目录网盘数据，交给es,es并创建索引 
