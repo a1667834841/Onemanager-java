@@ -1,8 +1,6 @@
 package com.dnslin.onemanager.test;
 
 import cn.hutool.core.util.RandomUtil;
-import com.dnslin.Utils.logic.HttpUtils;
-import com.dnslin.Utils.result.HttpClientResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,12 +14,12 @@ import java.util.Map;
 public class Test01 {
     @Test
     public void test(){
-        System.out.println("test run .....");
-        Map<String, String> map = new HashMap<>();
-        map.put("foo", "bar");
-        HttpClientResult httpClientResult = HttpUtils.doGet("https://baidu.com",map);
-        System.out.println(httpClientResult.getContent());
-        System.out.println(httpClientResult.getCode());
+//        System.out.println("test run .....");
+//        Map<String, String> map = new HashMap<>();
+//        map.put("foo", "bar");
+//        HttpClientResult httpClientResult = HttpUtils.doGet("https://baidu.com",map);
+//        System.out.println(httpClientResult.getContent());
+//        System.out.println(httpClientResult.getCode());
     }
 
     @Test

@@ -1,7 +1,7 @@
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://sql.dnslin.com:3306/rcba?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      url: jdbc:mysql://127.0.0.1:3306/onemanager?useUnicode=true&characterEncoding=utf-8&useSSL=false
       driver-class-name: com.mysql.jdbc.Driver
       username: root
       password: root
@@ -17,4 +17,11 @@ logging:
     root: info
     com.dnslin.onemanager: debug
 server:
-  port: 5678
+  port: 8081
+
+onedrive:
+  clientSecret: q847Q~yGYv6_GasCcKRaLF4syQUqpVz5D_HoH
+  scope: offline_access User.Read openid Mail.Read
+  redirectUri: http://localhost:8081/api/outlook
+  clientId: 0d5e84db-18cf-4ab7-bc67-4af2dc9bce6b
+  authenticateEndPoint: login.microsoftonline.com

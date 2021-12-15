@@ -1,7 +1,8 @@
 package com.dnslin.onemanager.logic.impl;
 
+import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.dnslin.Utils.logic.HttpUtils;
+
 import com.dnslin.onemanager.exception.AppException;
 import com.dnslin.onemanager.logic.AuthToken;
 import com.dnslin.onemanager.pojo.Onedriveconfig;
@@ -10,9 +11,13 @@ import com.dnslin.onemanager.service.SaveConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpUtils;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +34,17 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class AuthTokenImpl extends HttpServlet implements AuthToken {
-    private final ServletContext context = this.getServletContext();
+public class AuthTokenImpl implements AuthToken {
 
     @Autowired
+    private ServletContext context;
+
+    @Resource
     private SaveConfig saveConfig;
+
+    public AuthTokenImpl(SaveConfig saveConfig) {
+        this.saveConfig = saveConfig;
+    }
 
     @Override
     public void getAccessToken(Onedriveconfig config) throws IOException {
@@ -41,14 +52,15 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
         if (code == null || code.isEmpty()) {
             throw new AppException(ResponseEnum.AUTH_CODE_ISNULL);
         }
-        Map<String, String> param = new HashMap<String, String>();
+        Map<String, Object> param = new HashMap<String, Object>();
         param.put("client_id", config.getClientid());
         param.put("scope", "files.readwrite.all files.readwrite offline_access");
         param.put("code", code);
         param.put("redirect_uri", config.getRedirecturl());
         param.put("grant_type", "authorization_code");
         param.put("client_secret", config.getRedirecturl());
-        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(), null);
+        String res = HttpUtil.post("https://login.microsoftonline.com/common/oauth2/v2.0/token", param,3000);
+        extracted(res, config);
     }
 
     @Override
@@ -58,14 +70,15 @@ public class AuthTokenImpl extends HttpServlet implements AuthToken {
             log.info("Access_token:==>" + context.getAttribute("access_token"));
             throw new AppException(ResponseEnum.Token_invalid);
         }
-        Map<String, String> param = new HashMap<String, String>();
+        Map<String, Object> param = new HashMap<String, Object>();
         param.put("client_id", config.getClientid());
         param.put("scope", "files.readwrite.all files.readwrite offline_access");
         param.put("refresh_token", context.getAttribute("refresh_token").toString());
         param.put("redirect_uri", config.getRedirecturl());
         param.put("grant_type", "refresh_token");
         param.put("client_secret", config.getRedirecturl());
-        extracted(HttpUtils.doPost("https://login.microsoftonline.com/common/oauth2/v2.0/token", param).getContent(), config);
+        String res = HttpUtil.post("https://login.microsoftonline.com/common/oauth2/v2.0/token", param,3000);
+        extracted(res, config);
     }
 
     /**
