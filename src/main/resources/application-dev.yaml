@@ -12,6 +12,8 @@ spring:
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
       validation-query: SELECT 1 FROM DUAL
+  resources:
+    static-locations: classpath:/
 logging:
   level:
     root: info
@@ -25,3 +27,12 @@ onedrive:
   redirectUri: http://localhost:8081/api/outlook
   clientId: 0d5e84db-18cf-4ab7-bc67-4af2dc9bce6b
   authenticateEndPoint: login.microsoftonline.com
+  # 文件应用密钥信息
+  file:
+    clientSecret: wfy7Q~0R2MmSF6Zl3YRTcXxkGF0L8XOb_CL7k
+    scope: offline_access Files.Read Files.ReadWrite Files.Read.All Files.ReadWrite.All
+    redirectUri: http://localhost:8081/api/file/auth
+    clientId: 526c05e9-5e68-4178-aa62-43f70ba4ae96
+    authenticateEndPoint: login.microsoftonline.com
+microsoft-graph:
+  root-url: https://graph.microsoft.com/v1.0

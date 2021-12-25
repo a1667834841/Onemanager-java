@@ -15,7 +15,15 @@
 
 ### TODO
 
+#### 2021-12
 - [X] 获取onedrive token (secreteId->code->token)
-- [ ] 使用java 调用onedrive接口  获取文件目录信息，获取文件内容
-- [ ] 使用vue 展示网盘目录信息，文件内容
+- [X] 使用java 调用onedrive接口  获取文件目录信息，获取文件内容
+- [X] 使用vue 展示网盘目录信息，文件内容
+- [X] 增加缩略图模式
+![img.png](https://gitee.com/zxqzhuzhu/imgs/raw/master/picGo/image-20211226011921711.png)
+  
+#### 2022-01
+- [ ] 分页列表
 - [ ] 定时任务 将指定目录网盘数据，交给es,es并创建索引 
+- [ ] 文件的上传，删除
+- [ ] md文件的修改
