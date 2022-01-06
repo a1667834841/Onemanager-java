@@ -17,7 +17,7 @@ import java.util.Date;
  * @createTime 2021年12月17日 17:52:00
  */
 @Data
-public class DriveItem {
+public class DriveItem extends Item{
 
 
     /**
@@ -90,6 +90,26 @@ public class DriveItem {
             return mediumImg.getString("url");
         }
         return null;
+    }
+
+    /**
+     *预览图
+     */
+    public String getPreView() {
+        if (null != thumbnails && thumbnails.size() > 0) {
+            JSONObject thumbnailJson = (JSONObject)thumbnails.get(0);
+            JSONObject mediumImg = (JSONObject)thumbnailJson.get("large");
+            return mediumImg.getString("url");
+        }
+        return null;
+    }
+
+    /**
+     * 返回父级itemId
+     * @return
+     */
+    public String getParentId() {
+        return parentReference.getString("id");
     }
 
 

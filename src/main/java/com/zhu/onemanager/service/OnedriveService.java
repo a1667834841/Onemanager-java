@@ -1,6 +1,10 @@
 package com.zhu.onemanager.service;
 
+import com.zhu.onemanager.pojo.OneDriveUploadItem;
 import com.zhu.onemanager.result.R;
+
+import java.io.File;
+import java.io.IOException;
 
 public interface OnedriveService {
 
@@ -21,5 +25,27 @@ public interface OnedriveService {
      * @Param [path]
      * @return com.zhu.onemanager.result.R
      **/
-    R children(String path);
+    R children(String formatPath, String itemId);
+
+    /**
+     * @Author ggball
+     * @Description 上传大文件
+     * @Date  2022/1/6
+     * @Param [file]
+     * @return com.zhu.onemanager.result.R
+     **/
+    R uploadFile(File file);
+
+
+    /**
+     * @Author ggball
+     * @Description 上传小文件（<=4mb）
+     * @Date  2022/1/6
+     * @Param [uploadItem]
+     * @return com.zhu.onemanager.result.R
+     *
+     * @param uploadItem*/
+    R uploadMIniFile(OneDriveUploadItem uploadItem) throws IOException;
+
+
 }

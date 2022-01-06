@@ -36,12 +36,12 @@ public class AuthTokenImpl implements AuthToken {
     @Autowired
     private ServletContext context;
 
-    @Resource
-    private SaveConfig saveConfig;
-
-    public AuthTokenImpl(SaveConfig saveConfig) {
-        this.saveConfig = saveConfig;
-    }
+//    @Resource
+//    private SaveConfig saveConfig;
+//
+//    public AuthTokenImpl(SaveConfig saveConfig) {
+//        this.saveConfig = saveConfig;
+//    }
 
     @Override
     public void getAccessToken(OnedriveConfig config) throws IOException {
@@ -62,15 +62,15 @@ public class AuthTokenImpl implements AuthToken {
 
     @Override
     public void getRefreshToken(OnedriveConfig config) throws IOException {
-        if ((context.getAttribute("refresh_token") == null && context.getAttribute("refresh_token").toString().isEmpty()) || (context.getAttribute("access_token") == null && context.getAttribute("access_token").toString().isEmpty())) {
+        if (config == null || config.getRefreshToken() == null || config.getAccessToken() == null) {
             log.info("Refresh_token:==>" + context.getAttribute("refresh_token"));
             log.info("Access_token:==>" + context.getAttribute("access_token"));
-            throw new AppException(ResponseEnum.Token_invalid);
+            throw new AppException(ResponseEnum.TOKEN_INVALID);
         }
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("client_id", config.getClientId());
         param.put("scope", "files.readwrite.all files.readwrite offline_access");
-        param.put("refresh_token", context.getAttribute("refresh_token").toString());
+        param.put("refresh_token", config.getRefreshToken());
         param.put("redirect_uri", config.getRedirectUri());
         param.put("grant_type", "refresh_token");
         param.put("client_secret", config.getClientSecret());

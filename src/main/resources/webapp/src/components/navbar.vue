@@ -12,8 +12,8 @@
                 background-color="#545c64"
                 text-color="#fff"
                 active-text-color="#ffd04b">
-                <el-menu-item index="1"><a :href="tokenUrl"  target="_blank" style="text-decoration: none;" >授权</a></el-menu-item>
-                <el-menu-item index="2">网盘</el-menu-item>
+                <el-menu-item index="auth" id="auth"><a :href="tokenUrl"  target="_blank" style="text-decoration: none;" >授权</a></el-menu-item>
+                <el-menu-item index="table" id="table">网盘列表</el-menu-item>
 <!--                <el-menu-item index="3" disabled>消息中心</el-menu-item>-->
               </el-menu>
             </el-header>
@@ -26,6 +26,11 @@
 </template>
 
 <script>
+
+
+
+var env = process.env
+const baseUrl = env.BASE_URL
 export default {
   name: 'navbar',
   data () {
@@ -33,13 +38,15 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       activeIndex: '1',
       activeIndex2: '0',
-      tokenUrl: 'https://login.microsoftonline.com/common/oauth2/authorize?response_type=code&client_id=526c05e9-5e68-4178-aa62-43f70ba4ae96&redirect_uri=http://localhost:8081/api/file/auth'
+      tokenUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize?response_type=code&client_id=526c05e9-5e68-4178-aa62-43f70ba4ae96&redirect_uri='+baseUrl+'api/file/auth&scope=offline_access Files.Read Files.ReadWrite Files.Read.All Files.ReadWrite.All'
     }
   },
   methods: {
     handleSelect (key, keyPath) {
-      console.log(key, keyPath)
-    }
+      console.log(key);
+      this.$emit('tableValue',key);
+    },
+
   }
 }
 </script>

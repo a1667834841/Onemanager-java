@@ -1,0 +1,1 @@
+java -jar  oneManager-java.jar --spring.profiles.active=prod

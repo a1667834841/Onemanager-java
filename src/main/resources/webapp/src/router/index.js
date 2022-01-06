@@ -17,5 +17,10 @@ export default new Router({
       name: 'Table',
       component: Table
     },
+    {
+      path: '/layout',
+      name: 'Layout',
+      component: Layout
+    },
   ]
 })

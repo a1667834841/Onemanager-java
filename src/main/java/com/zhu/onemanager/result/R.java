@@ -22,8 +22,20 @@ public class R {
         this.data = data;
     }
 
+    public R(ResponseEnum responseEnum, String message) {
+        this.code = responseEnum.getCode();
+        this.message = message;
+        this.data = null;
+    }
+
     public static R ok(Object data) {
 
         return new R(ResponseEnum.SUCCESS,data);
     }
+
+    public static R error(String message) {
+
+        return new R(ResponseEnum.SYSTEM_ERROR,message);
+    }
+
 }

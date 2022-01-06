@@ -4,9 +4,11 @@ spring:
 logging:
   level:
     root: info
-    com.zhu.onemanager: debug
+    com.dnslin.onemanager: debug
 server:
-  port: 8081
+  port: 8881
+  servlet:
+    context-path: /oneManagerjava
 
 onedrive:
   clientSecret: q847Q~yGYv6_GasCcKRaLF4syQUqpVz5D_HoH
@@ -18,7 +20,7 @@ onedrive:
   file:
     clientSecret: wfy7Q~0R2MmSF6Zl3YRTcXxkGF0L8XOb_CL7k
     scope: offline_access Files.Read Files.ReadWrite Files.Read.All Files.ReadWrite.All
-    redirectUri: http://localhost:8081/api/file/auth
+    redirectUri: https://ggball.top/oneManagerjava/api/file/auth
     clientId: 526c05e9-5e68-4178-aa62-43f70ba4ae96
     authenticateEndPoint: login.microsoftonline.com
 microsoft-graph:

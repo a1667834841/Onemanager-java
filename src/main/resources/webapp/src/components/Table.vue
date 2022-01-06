@@ -1,10 +1,23 @@
 <template>
   <div id="table">
-    <el-row :gutter="20">
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-      <el-col :span="6">
+    <el-row :gutter="24">
+      <el-col :span="1">
+        <el-button size="small" type="danger">删除</el-button>
+      </el-col>
+      <el-col :span="1">
+        <el-upload
+          class="upload-demo"
+          :action="uploadUrl"
+          :data="uploadExtraData"
+          :show-file-list="false"
+          :on-success="uploadSuccess"
+          :on-error="uploadError"
+          :on-exceed="handleExceed">
+          <el-button size="small" type="primary">上传</el-button>
+<!--          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+        </el-upload>
+      </el-col>
+      <el-col :span="3">
         <el-switch
           v-model="isThumbnail"
           active-text="缩略图模式"
@@ -13,10 +26,37 @@
       </el-col>
     </el-row>
 
+
+    <el-row :gutter="24">
+
+      <el-col :span="18">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/layout' }">/</el-breadcrumb-item>
+
+          <el-breadcrumb-item v-for="(pathItem,index) in pathList" :key="index">
+            {{pathItem}}
+          </el-breadcrumb-item>
+
+        </el-breadcrumb>
+      </el-col>
+
+    </el-row>
+
     <el-table
       style="width: 100%"
+      v-loading="loading"
       :data="fileList"
     >
+      <el-table-column
+        prop="id"
+        label="id"
+        v-if="false"
+      ></el-table-column>
+      <el-table-column
+        prop="preView"
+        label="preView"
+        v-if="false"
+      ></el-table-column>
       <el-table-column
         prop="name"
         label="文件名"
@@ -29,7 +69,11 @@
         v-if="isThumbnail"
       >
         <template   slot-scope="scope">
-          <img :src="scope.row.thumbnail"  min-width="70" height="70" />
+          <el-image
+            style="width: 70px; height: 70px"
+            :src="scope.row.thumbnail"
+            :preview-src-list=[scope.row.preView]
+            ></el-image>
         </template>
       </el-table-column>
       <el-table-column
@@ -50,13 +94,24 @@
         width="180"
       >
         <template slot-scope="scope">
-          <el-link :href="scope.row.downloadUrl" :underline="false" style="margin-left:15px">
-            <el-button
+          <el-link
+            :href="scope.row.downloadUrl"
+            :underline="false"
+            v-if="scope.row.itemType == 'folder' ? false : true"
+            style="margin-left:15px">
+            <el-button type="primary"
               size="mini"
-            >{{scope.row.itemType == 'file' ? '下载' : '查看'}}</el-button>
+            >下载</el-button>
           </el-link>
+          <el-button
+            type="primary"
+            size="mini"
+            v-on:click="checkChildren(scope.row);addPath(scope.row);"
+            v-if="scope.row.itemType == 'folder' ? true : false"
+          >查看</el-button>
 
         </template>
+
       </el-table-column>
     </el-table>
   </div>
@@ -66,26 +121,57 @@
 <script>
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:8081/'
+
+var env = process.env
+const baseUrl = env.BASE_URL === 'undefined' ? 'http://localhost:8081/' : env.BASE_URL
 
 export default {
   name: 'Table',
-  created () {
+  mounted () {
     this.index()
   },
   data () {
     return {
+      // 当前itemId
+      curItemId:"",
+      // 文件列表
       fileList: [],
+      // 显示缩略图
       isThumbnail: false,
+      // 加载动画
+      loading: true,
+      // 路径列表
+      pathList:[],
+      // 上传路径
+      uploadUrl: baseUrl+"oneDrive/upload",
+      // 上传额外信息
+      uploadExtraData: {}
     }
 
   },
   watch: {
     // 监听缩略图模式
-    isThumbnail: 'watchThumbnail'
+    isThumbnail: 'watchThumbnail',
+    curItemId: 'buildUploadExtraData'
   },
   methods: {
 
+    // 刷新当前页面
+    refresh() {
+      this.checkChildren(this.curItemId)
+    },
+
+    //查看目录下的内容
+    checkChildren(row) {
+      console.log(row.id);
+      this.children(row.id);
+    },
+    // 添加路径
+    addPath(raw) {
+      this.pathList.push(raw.name)
+    },
+
+    // 比较缩略状态新旧值
     watchThumbnail(curVal,oldVal) {
       // if false -> true reIndex
       if (oldVal == false && curVal == true) {
@@ -94,11 +180,10 @@ export default {
       // console.log(curVal,oldVal);
     },
 
-    handleDownload (index, row) {
-      console.log(index, row)
-    },
 
+    // 首页信息
     index () {
+      this.loading = true;
       const that = this
       return axios
         .get(baseUrl + 'oneDrive/index',{
@@ -108,12 +193,68 @@ export default {
         })
         .then(response => {
           console.log(response.data.data)
-          that.fileList = response.data.data
+          this.fileList = response.data.data.itemList
+          this.curItemId = response.data.data.curItemId
+          console.log(this.curItemId)
+          this.loading = false;
           return response.data.data
         })
         .catch(function (error) {
           console.log(error)
         })
+    },
+
+    // 根据itemId查看子内容
+    children(itemId) {
+      this.loading = true;
+      return axios
+        .get(baseUrl + 'oneDrive/'+itemId+'/children',{
+          params: {
+            thumbnail: this.isThumbnail
+          }
+        })
+        .then(response => {
+          console.log(response.data.data)
+          this.fileList = response.data.data.itemList
+          this.curItemId = response.data.data.curItemId
+          this.loading = false;
+          return response.data.data
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+
+    // 上传相关
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+    },
+    uploadSuccess(response, file, fileList) {
+      this.$message({
+        message: '上传成功',
+        type: 'success'
+      });
+      this.index()
+    },
+    uploadError(err, file, fileList) {
+      this.$message({
+        message: '上传失败',
+        type: 'error'
+      });
+    },
+
+    // 构造上传额外信息
+    buildUploadExtraData () {
+      this.uploadExtraData = {"itemId":this.curItemId}
     },
 
     // 容量转换
