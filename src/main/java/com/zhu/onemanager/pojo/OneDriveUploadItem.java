@@ -40,6 +40,10 @@ public class OneDriveUploadItem implements UploadItem{
      */
     private MultipartFile file;
 
+    public long getSize() {
+        return file.getSize();
+    }
+
 
 
     @Override

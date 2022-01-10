@@ -23,11 +23,10 @@ public class TimeToRefresh  {
     private AuthToken authTokenImpl;
 
     @Autowired
-    private ServletContext context;
+    private OnedriveConfig config;
 
-    @Scheduled(fixedRate = 1000 * 60 * 1, initialDelay = 1000 * 1)
+    @Scheduled(fixedRate = 1000 * 60 * 30, initialDelay = 1000 * 5)
     public void runGetToken() throws IOException {
-        OnedriveConfig config = (OnedriveConfig) context.getAttribute("OnedriveConfig");
         authTokenImpl.getRefreshToken(config);
     }
 

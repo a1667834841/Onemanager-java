@@ -1,4 +1,25 @@
 spring:
+  servlet:
+    multipart:
+      # 文件上传限制
+      max-file-size: 100GB
+      max-request-size: 100GB
+
+  jpa:
+    show-sql: true
+  datasource:
+    #  驱动
+    driver-class-name: org.h2.Driver
+    # h2 内存数据库 内存模式连接配置 库名: mybatis
+    url: jdbc:h2:mem:one_manager;MODE=MySQL;
+    # 初始化数据表 DDL
+    schema: classpath:sql/init.sql
+    #  初始化数据 DML
+    data: classpath:sql/data.sql
+    username: sa
+    password: sa
+
+
   resources:
     static-locations: classpath:/
 logging:

@@ -1,5 +1,6 @@
 package com.zhu.onemanager.controller.onedrive;
 
+import com.zhu.onemanager.constant.FileConstant;
 import com.zhu.onemanager.logic.impl.OneDriveItemUrlImpl;
 import com.zhu.onemanager.pojo.DriveParams;
 import com.zhu.onemanager.pojo.OneDriveUploadItem;
@@ -95,7 +96,14 @@ public class OnedriveController {
                 .file(file)
                 .build();
 
-        return onedriveService.uploadMIniFile(uploadItem);
+        // 文件大于4mb ,采用大文件上传
+        if (file.getSize() > (4 * FileConstant.STANDARD_MB) ) {
+            return onedriveService.multiUpload(uploadItem);
+        } else {
+            return onedriveService.uploadMIniFile(uploadItem);
+        }
+
+
     }
 
 

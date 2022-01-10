@@ -14,6 +14,7 @@ public enum ResponseEnum {
     THE_RESULT_SET_IS_EMPTY("4008","请求结果集为Null,请联系管理员"),
     OBJECT_IS_EMPTY("4009","OnedriveConfig实例为NULL"),
     THE_CALLBACK_FAILED("4010","回调函数失败"),
+    CONFIG_INVALID("4011","配置文件无效"),
     UPDATE_FAILED("6001","更新失败"),
     INSERT_THE_FAILURE("6002","插入失败"),
     THE_QUERY_FAILS("6003","查询失败"),

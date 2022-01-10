@@ -1,0 +1,1 @@
+insert into user (name,mic_code,github_code,update_time,create_time) values ('test','','',now(),now());

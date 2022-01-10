@@ -50,4 +50,20 @@ public class GHttpUtil extends HttpUtil {
 
     }
 
+    public static Dict put(String url,byte[] values,String contentType,int contentLength,long totalLength,int[] range) {
+        HttpRequest request = HttpRequest
+                .put(url)
+                .contentType("application/octet-stream")
+                .contentLength(contentLength)
+                .body(values);
+
+        // 添加 传输指定字节的范围
+        request.header("Content-Range","bytes " + range[0] + "-" + range[1] + "/" + totalLength); // "bytes 0-99/100"
+        String url1 = request.getUrl();
+        String res = request.execute().body();
+        System.out.println("res = " + res);
+        return Dict.parse(JSONObject.parseObject(res, Map.class));
+
+    }
+
 }

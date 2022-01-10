@@ -4,11 +4,14 @@ import cn.hutool.http.GlobalHeaders;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
 
+import com.zhu.onemanager.constant.FileConstant;
+import com.zhu.onemanager.constant.PathConstant;
 import com.zhu.onemanager.exception.AppException;
 import com.zhu.onemanager.logic.AuthToken;
 import com.zhu.onemanager.pojo.OnedriveConfig;
 import com.zhu.onemanager.result.ResponseEnum;
 import com.zhu.onemanager.service.SaveConfig;
+import com.zhu.onemanager.utlis.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,7 +65,15 @@ public class AuthTokenImpl implements AuthToken {
 
     @Override
     public void getRefreshToken(OnedriveConfig config) throws IOException {
-        if (config == null || config.getRefreshToken() == null || config.getAccessToken() == null) {
+
+        if (config == null) {
+            throw new AppException(ResponseEnum.CONFIG_INVALID);
+        }
+
+        Map map = FileUtils.readMap(PathConstant.TOKEN_PATH, FileConstant.KV_SEPARATOR);
+        if (null != map && map.size() > 0) {
+            config.setRefreshToken(String.valueOf(map.get("refreshToken")));
+        } else if (config.getRefreshToken() == null || config.getAccessToken() == null) {
             log.info("Refresh_token:==>" + context.getAttribute("refresh_token"));
             log.info("Access_token:==>" + context.getAttribute("access_token"));
             throw new AppException(ResponseEnum.TOKEN_INVALID);
@@ -79,7 +90,7 @@ public class AuthTokenImpl implements AuthToken {
     }
 
     /**
-     * 抽出重复代码
+     * 获取token 的后置处理 抽出重复代码
      *
      * @return void
      * @Description:
@@ -102,6 +113,16 @@ public class AuthTokenImpl implements AuthToken {
 
         // 将token 存入请求头
         GlobalHeaders.INSTANCE.header("Authorization","bearer "+access_token);
+
+        // token存入文件
+        HashMap<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("accessToken",access_token);
+        tokenMap.put("refreshToken",refresh_token);
+        try {
+            FileUtils.write(tokenMap, PathConstant.TOKEN_PATH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //saveConfig.saveOnedriveConfig(config);
     }

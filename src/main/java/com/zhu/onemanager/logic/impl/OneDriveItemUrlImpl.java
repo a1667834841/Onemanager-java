@@ -1,10 +1,9 @@
 package com.zhu.onemanager.logic.impl;
 
 import cn.hutool.core.lang.Dict;
-import cn.hutool.http.HttpUtil;
 import com.zhu.onemanager.pojo.OneDriveUploadItem;
 import com.zhu.onemanager.utlis.GHttpUtil;
-import com.zhu.onemanager.utlis.Strings;
+import com.zhu.onemanager.utlis.lang.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -55,11 +54,9 @@ public class OneDriveItemUrlImpl {
      * @return java.lang.String
      **/
     public String getUploadUrl(OneDriveUploadItem uploadItem) {
-        String uploadSessionUrl = createUploadSession(uploadItem);
+        String uploadSessionUrl = createCurUploadSession(uploadItem);
         HashMap<String, String> parameter = new HashMap<>();
         Dict dict = GHttpUtil.postResDict(rootUrl + uploadSessionUrl, String.valueOf(parameter));
-        System.out.println("dict = " + dict);
-
         return dict.getStr("uploadUrl");
     }
 

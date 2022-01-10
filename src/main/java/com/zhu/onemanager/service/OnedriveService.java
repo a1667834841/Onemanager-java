@@ -31,10 +31,10 @@ public interface OnedriveService {
      * @Author ggball
      * @Description 上传大文件
      * @Date  2022/1/6
-     * @Param [file]
+     * @Param [uploadItem]
      * @return com.zhu.onemanager.result.R
      **/
-    R uploadFile(File file);
+    R uploadFile(OneDriveUploadItem uploadItem) throws IOException;
 
 
     /**
@@ -47,5 +47,12 @@ public interface OnedriveService {
      * @param uploadItem*/
     R uploadMIniFile(OneDriveUploadItem uploadItem) throws IOException;
 
-
+    /**
+     * @Author ggball
+     * @Description 多线程上传
+     * @Date  2022/1/10
+     * @Param [uploadItem]
+     * @return com.zhu.onemanager.result.R
+     **/
+    R multiUpload(OneDriveUploadItem uploadItem) throws IOException;
 }

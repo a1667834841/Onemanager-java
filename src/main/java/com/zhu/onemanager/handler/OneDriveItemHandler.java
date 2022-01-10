@@ -58,7 +58,9 @@ public class OneDriveItemHandler extends ItemHandlerAbs {
      */
     @Override
     public void upload(Item item) {
-
+        // 上传逻辑
+        // 上传后置
+        changeCallBack(null,item);
     }
 
     /**

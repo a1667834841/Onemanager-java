@@ -19,6 +19,9 @@ public class FileConstant {
     public static final String PATH_COLON_SEPARATOR = ":/";
 
 
+    public static final String KV_SEPARATOR = ":";
+
+
     /**
      * 系统产生的临时文件路径
      */
@@ -43,6 +46,17 @@ public class FileConstant {
      * 最大支持文本文件大小为 ? KB 的文件内容.
      */
     public static Long TEXT_MAX_FILE_SIZE_KB = 100L;
+
+
+    /**
+     * 1 kb
+     */
+    public static Integer STANDARD_KB = 1024;
+
+    /**
+     * 1 mb
+     */
+    public static Integer STANDARD_MB = 1024 * 1024;
 
 
 
