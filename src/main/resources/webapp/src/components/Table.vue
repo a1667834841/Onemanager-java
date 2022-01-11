@@ -2,7 +2,7 @@
   <div id="table">
     <el-row :gutter="24">
       <el-col :span="1">
-        <el-button size="small" type="danger">删除</el-button>
+        <el-button size="small" type="danger" @click="deleteCheckedItems">删除</el-button>
       </el-col>
       <el-col :span="1">
         <el-upload
@@ -11,8 +11,7 @@
           :data="uploadExtraData"
           :show-file-list="false"
           :on-success="uploadSuccess"
-          :on-error="uploadError"
-          :on-exceed="handleExceed">
+          :on-error="uploadError">
           <el-button size="small" type="primary">上传</el-button>
 <!--          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
         </el-upload>
@@ -46,7 +45,14 @@
       style="width: 100%"
       v-loading="loading"
       :data="fileList"
+      ref="multipleTable"
+      @selection-change="handleSelectionChange"
     >
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
+
       <el-table-column
         prop="id"
         label="id"
@@ -120,7 +126,7 @@
 
 <script>
 import axios from 'axios'
-
+import qs from 'qs'
 
 var env = process.env
 const baseUrl = env.BASE_URL === 'undefined' ? 'http://localhost:8081/' : env.BASE_URL
@@ -145,7 +151,9 @@ export default {
       // 上传路径
       uploadUrl: baseUrl+"oneDrive/upload",
       // 上传额外信息
-      uploadExtraData: {}
+      uploadExtraData: {},
+      // 选中itemId集合
+      checkedItem:{}
     }
 
   },
@@ -226,18 +234,6 @@ export default {
     },
 
     // 上传相关
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-    },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
-    },
     uploadSuccess(response, file, fileList) {
       this.$message({
         message: '上传成功',
@@ -245,6 +241,7 @@ export default {
       });
       this.index()
     },
+
     uploadError(err, file, fileList) {
       this.$message({
         message: '上传失败',
@@ -255,6 +252,42 @@ export default {
     // 构造上传额外信息
     buildUploadExtraData () {
       this.uploadExtraData = {"itemId":this.curItemId}
+    },
+
+    // 删除
+    deleteCheckedItems() {
+      // 获取项目ids
+      let itemIds = []
+      for (let checkedItem of this.checkedItem) {
+        itemIds.push(checkedItem.id)
+      }
+      return axios
+        .get(baseUrl + 'oneDrive/delete',{
+          params: {
+            itemIds: itemIds
+          },
+          paramsSerializer: params => {
+            return qs.stringify(params, { indices: false })
+          }
+        })
+        .then(response => {
+          console.log(response.data.data)
+          this.loading = false;
+          this.index()
+        })
+        .catch(function (error) {
+          console.log(error)
+          this.index()
+        })
+
+
+    },
+
+    /*checkBox*/
+
+    // checkbox变化时触发
+    handleSelectionChange(val) {
+      this.checkedItem = val;
     },
 
     // 容量转换

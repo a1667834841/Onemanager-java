@@ -27,7 +27,7 @@ public class FileUtils {
     /**
      *  Microsoft Graph indicates all chunks MUST be in a multiple of 320Kib (327,680 bytes).
      */
-    private static final Integer FRAG_SIZE = 320 * 10 * FileConstant.STANDARD_KB;
+    private static final Integer FRAG_SIZE = 192 * 320 * FileConstant.STANDARD_KB;
 
     /**
      * @Author ggball
@@ -46,6 +46,13 @@ public class FileUtils {
         FileUtil.writeUtf8Map(map,file, FileConstant.KV_SEPARATOR,false);
     }
 
+    /**
+     * @Author ggball
+     * @Description 读取文件 返回map
+     * @Date  2022/1/11
+     * @Param [path, separator]
+     * @return java.util.Map
+     **/
     public static Map readMap(String path,String separator) throws IOException {
         File file = FileUtil.file(PathConstant.getFilePath(path));
 
@@ -94,7 +101,7 @@ public class FileUtils {
             // 添加字节
             newBytes[i % FRAG_SIZE] = values[i];
 
-            // 下标是4mb的倍数
+            // 下标是FRAG_SIZE的倍数
             if ((i+1) / FRAG_SIZE > 0 && (i+1) % FRAG_SIZE == 0) {
                 // 添加字节数组
                 bytes.put(new int[]{preIndex,i},newBytes.clone());

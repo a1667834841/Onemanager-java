@@ -53,17 +53,25 @@ public class GHttpUtil extends HttpUtil {
     public static Dict put(String url,byte[] values,String contentType,int contentLength,long totalLength,int[] range) {
         HttpRequest request = HttpRequest
                 .put(url)
-                .contentType("application/octet-stream")
-                .contentLength(contentLength)
+                .contentType(contentType)
+                .header("Content-Range","bytes " + range[0] + "-" + range[1] + "/" + totalLength) // "bytes 0-99/100"
+//                .contentLength(contentLength)
                 .body(values);
 
         // 添加 传输指定字节的范围
-        request.header("Content-Range","bytes " + range[0] + "-" + range[1] + "/" + totalLength); // "bytes 0-99/100"
-        String url1 = request.getUrl();
         String res = request.execute().body();
-        System.out.println("res = " + res);
         return Dict.parse(JSONObject.parseObject(res, Map.class));
 
+    }
+
+    /*删除请求*/
+    public static Dict delete(String url) {
+        HttpRequest request = HttpRequest
+                .delete(url);
+        HttpResponse res = request.execute();
+        Dict dict = new Dict();
+        dict.put("status",res.getStatus());
+        return dict;
     }
 
 }

@@ -1,5 +1,8 @@
 package com.zhu.onemanager.controller.onedrive;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.stream.CollectorUtil;
 import com.zhu.onemanager.constant.FileConstant;
 import com.zhu.onemanager.logic.impl.OneDriveItemUrlImpl;
 import com.zhu.onemanager.pojo.DriveParams;
@@ -12,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author ggBall
@@ -84,7 +89,7 @@ public class OnedriveController {
      * @return com.zhu.onemanager.result.R
      **/
     @PostMapping("/upload")
-    public R upload(@RequestParam("file") MultipartFile file,String itemId) throws IOException {
+    public R uploadItem(@RequestParam("file") MultipartFile file,String itemId) throws IOException, InterruptedException {
         if (file.isEmpty()) {
             return R.error("上传失败，请选择文件");
         }
@@ -102,8 +107,15 @@ public class OnedriveController {
         } else {
             return onedriveService.uploadMIniFile(uploadItem);
         }
+    }
 
+    @GetMapping("/delete")
+    public R deleteItem(@RequestParam("itemIds") List<String> itemIds) {
+        if (CollUtil.isEmpty(itemIds)) {
+            return R.error("未选择删除文件");
+        }
 
+        return onedriveService.deleteItem(itemIds);
     }
 
 

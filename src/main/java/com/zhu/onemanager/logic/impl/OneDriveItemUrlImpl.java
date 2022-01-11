@@ -80,4 +80,29 @@ public class OneDriveItemUrlImpl {
         return rootUrl + Strings.solve(url,uploadItem.getItemId(),uploadItem.getFileName());
     }
 
+    /**
+     * @Author ggball
+     * @Description 获取删除url
+     * @Date  2022/1/11
+     * @Param driveId
+     * @Param itemId
+     * @return java.lang.String
+     **/
+    public String getDeleteUrl(String driveId,String itemId) {
+        String path = Strings.solve("/drives/{drive-id}/items/{item-id}", driveId, itemId);
+        return rootUrl + path;
+    }
+
+    /**
+     * @Author ggball
+     * @Description 获取删除url
+     * @Date  2022/1/11
+     * @Param itemId
+     * @return java.lang.String
+     **/
+    public String getCurDeleteUrl(String itemId) {
+        String path = Strings.solve("/me/drive/items/{item-id}", itemId);
+        return rootUrl + path;
+    }
+
 }

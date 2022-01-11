@@ -5,6 +5,7 @@ import com.zhu.onemanager.result.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public interface OnedriveService {
 
@@ -55,4 +56,13 @@ public interface OnedriveService {
      * @return com.zhu.onemanager.result.R
      **/
     R multiUpload(OneDriveUploadItem uploadItem) throws IOException;
+
+    /**
+     * @Author ggball
+     * @Description 删除itemId集合
+     * @Date  2022/1/11
+     * @Param [itemIds]
+     * @return com.zhu.onemanager.result.R
+     **/
+    R deleteItem(List<String> itemIds);
 }

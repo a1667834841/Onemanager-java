@@ -19,11 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author ggBall
@@ -109,8 +112,6 @@ public class OnedriveServiceImpl implements OnedriveService {
     }
 
     public R multiUpload(OneDriveUploadItem uploadItem) throws IOException {
-        // 初始化线程池
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
 
         MultipartFile file = uploadItem.getFile();
         byte[] bytes = file.getBytes();
@@ -125,7 +126,9 @@ public class OnedriveServiceImpl implements OnedriveService {
         // 文件总长度
         long totalLength = file.getSize();
 
+        long start = System.currentTimeMillis();
         for (Map.Entry<int[], byte[]> entry : byteMap.entrySet()) {
+
             // 数据范围 [0] 起始位置 [1] 结束位置
             int[] range = entry.getKey();
             // 数据
@@ -133,14 +136,39 @@ public class OnedriveServiceImpl implements OnedriveService {
             // 此次传输的文件长度
             int contentLength = values.length;
 
-            System.out.println("range[0] = " + range[0] + "range[1] =" + range[1]);
-            // 调用上传接口
-            Dict res = GHttpUtil.put(curUploadSession, fileBytes, contentType, contentLength, totalLength, range);
-        }
 
-        return R.ok(null);
+            // 调用上传接口
+            Dict res = GHttpUtil.put(curUploadSession, values, contentType, contentLength, totalLength, range);
+            System.out.println("range[0] = " + range[0] + "range[1] =" + range[1] + " res: " + res);
+        }
+        long end = System.currentTimeMillis();
+        log.info("耗时{}秒",(end-start)/1000.0);
+
+        return R.ok("上传成功");
     }
 
+    /**
+     * @param itemIds
+     * @return com.zhu.onemanager.result.R
+     * @Author ggball
+     * @Description 删除itemId集合
+     * @Date 2022/1/11
+     * @Param [itemIds]
+     */
+    @Override
+    public R deleteItem(List<String> itemIds) {
+        List<String> urls = new LinkedList<>();
+
+        for (String itemId : itemIds) {
+            urls.add(oneDriveItemUrl.getCurDeleteUrl(itemId));
+        }
+
+        urls.parallelStream().forEach(url -> {
+            GHttpUtil.delete(url);
+        });
+
+        return R.ok("删除成功");
+    }
 
 
     /**
