@@ -70,7 +70,7 @@ public class AuthTokenImpl implements AuthToken {
             throw new AppException(ResponseEnum.CONFIG_INVALID);
         }
 
-        Map map = FileUtils.readMap(PathConstant.TOKEN_PATH, FileConstant.KV_SEPARATOR);
+        Map map = FileUtils.readToken(PathConstant.TOKEN_PATH, FileConstant.KV_SEPARATOR);
         if (null != map && map.size() > 0) {
             config.setRefreshToken(String.valueOf(map.get("refreshToken")));
         } else if (config.getRefreshToken() == null || config.getAccessToken() == null) {

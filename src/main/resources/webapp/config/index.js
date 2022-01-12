@@ -6,11 +6,13 @@ const path = require('path')
 
 module.exports = {
   dev: {
+    // Template for index.html
+    index: path.resolve(__dirname, '../../templates/index.html'),
 
     // Paths
+    assetsRoot: path.resolve(__dirname, '../../'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -50,7 +52,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../../'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/oneManagerjava',
 
     /**
      * Source Maps

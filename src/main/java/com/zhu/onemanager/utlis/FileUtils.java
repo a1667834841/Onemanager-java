@@ -5,11 +5,14 @@ import cn.hutool.core.util.CharsetUtil;
 import com.zhu.onemanager.constant.FileConstant;
 import com.zhu.onemanager.constant.PathConstant;
 import lombok.SneakyThrows;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.soap.SAAJResult;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,7 +40,7 @@ public class FileUtils {
      * @return void
      **/
     public static void write(Map map , String path) throws IOException {
-        File file = FileUtil.file(PathConstant.getFilePath(path));
+        File file = FileUtil.file(path);
         if (FileUtil.exist(file)) {
             // 文件清空
            FileUtil.writeUtf8String("",file);
@@ -45,6 +48,7 @@ public class FileUtils {
         // 文件写入
         FileUtil.writeUtf8Map(map,file, FileConstant.KV_SEPARATOR,false);
     }
+
 
     /**
      * @Author ggball
@@ -70,6 +74,36 @@ public class FileUtils {
         return map;
 
     }
+
+    /**
+     * @Author ggball
+     * @Description springboot 打成jar 文件形式读取不了jar里面的文件 所以专门写了这个
+     * @Date  2022/1/12
+     * @Param [path, separator]
+     * @return java.util.Map
+     **/
+    public static Map readToken(String path,String separator) throws IOException {
+        String values = "";
+        ClassPathResource resource = new ClassPathResource(path);
+        try {
+            byte[] binaryData = FileCopyUtils.copyToByteArray(resource.getInputStream());
+            values = new String(binaryData, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Map<String, String> map = new HashMap<>();
+        String[] lines = values.split("\r\n");
+        for (String line : lines) {
+            String[] split = line.split(separator);
+            map.put(split[0],split[1]);
+        }
+
+        return map;
+
+    }
+
+
 
 
     /**

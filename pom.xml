@@ -147,7 +147,29 @@
 
             </plugin>
 
+
+
         </plugins>
+
+        <resources>
+            <resource>
+
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+
+                    <include>**/*.yaml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.config</include>
+                    <include>**/*.txt</include>
+                    <include>sql/**</include>
+                    <include>static/**</include>
+                    <include>templates/**</include>
+                </includes>
+                <excludes>
+                    <exclude>/webapp/node_modules</exclude>
+                </excludes>
+            </resource>
+        </resources>
 
     </build>
 
