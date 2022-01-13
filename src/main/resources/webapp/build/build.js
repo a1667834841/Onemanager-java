@@ -1,7 +1,9 @@
 'use strict'
 require('./check-versions')()
 
-process.env.NODE_ENV = 'development'
+process.env.NODE_ENV = process.argv.splice(2)[0] === 'dev' ? 'development' : 'production'
+
+console.log(process.env.NODE_ENV)
 
 const ora = require('ora')
 const rm = require('rimraf')

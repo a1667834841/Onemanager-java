@@ -30,7 +30,7 @@
 
 
 var env = process.env
-const baseUrl = env.BASE_URL
+var baseUrl = env.BASE_URL
 export default {
   name: 'navbar',
   data () {

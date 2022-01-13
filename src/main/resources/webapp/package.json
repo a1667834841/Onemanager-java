@@ -12,8 +12,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build-prod": "node build/build.js --config build/webpack.prod.conf.js",
-    "build-dev": "node build/build.js --config build/webpack.dev.conf.js"
+    "build-dev": "node build/build.js dev",
+    "build-prod": "node build/build.js prod"
   },
   "dependencies": {
     "axios": "^0.24.0",

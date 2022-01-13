@@ -129,7 +129,7 @@ import axios from 'axios'
 import qs from 'qs'
 
 var env = process.env
-const baseUrl = env.BASE_URL === 'undefined' ? 'http://localhost:8081/' : env.BASE_URL
+var baseUrl = env.BASE_URL === 'undefined' ? 'http://localhost:8081/' : env.BASE_URL
 
 export default {
   name: 'Table',

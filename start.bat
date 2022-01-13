@@ -10,7 +10,7 @@ echo '删除静态文件夹成功'
 
 cd src\main\resources\webapp
 # 生成静态文件
-npm run build-dev --scripts-prepend-node-path=auto  & cd ../../../../ & mvn clean -DskipTests=true package
+npm run build-prod --scripts-prepend-node-path=auto  & cd ../../../../ & mvn clean -DskipTests=true package
 
 echo '生成静态文件成功'
 
