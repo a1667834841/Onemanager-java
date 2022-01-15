@@ -22,4 +22,6 @@ jobs:
           gitea_host: "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
           gitea_username: "ggball" #${{ secrets.GITEA_USERNAME }}
           gitea_accesstoken: "bc65cc90c76baba247e753c95ef5721200e97b59"
+          gh_username: "1667834841@qq.com"
+          gh_accesstoken: ${{secrets.GITHUB_TOKEN}}
 
