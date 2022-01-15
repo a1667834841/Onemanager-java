@@ -5,4 +5,4 @@ codingUrl="https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
 
 git add -A
 git commit -m "${msg}"
-git push $codingUrl master --force # 推送
+git push "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git" master --force # 推送
