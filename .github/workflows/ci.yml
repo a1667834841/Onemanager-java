@@ -21,8 +21,9 @@ jobs:
         uses: mego22/actions-git-sha@main
         with:
           username: "ggball"
-          password: "bc65cc90c76baba247e753c95ef5721200e97b59"
+          password: "xfFvaU5ACzp9kw6"
           repo: "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
+          branch: "master"
       - name: Print sha
         run: echo "The sha is ${{ steps.remote_sha.outputs.sha }}"
 
