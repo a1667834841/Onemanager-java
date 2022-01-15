@@ -3,8 +3,6 @@ git config --global user.email "1667834841@qq.com"
 
 codingUrl="https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
 
-git checkout
 git add -A
 git commit -m "${msg}"
-git remote add origin $codingUrl
-git push -f origin master # 推送
+git push origin master --force # 推送
