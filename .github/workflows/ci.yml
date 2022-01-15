@@ -19,8 +19,8 @@ jobs:
       - name: commit-gitea # 提交gitea仓库
         id: remote_sha
         uses: mego22/actions-git-sha@main
-          with:
-            repo: "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
+        with:
+          repo: "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
       - name: Print sha
         run: echo "The sha is ${{ steps.remote_sha.outputs.sha }}"
 
