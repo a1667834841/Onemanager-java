@@ -17,4 +17,9 @@ jobs:
         uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
 
       - name: commit-gitea # 提交gitea仓库
-        run: bash push-gitea.sh
+        uses: varunsridharan/action-gitea-mirror@main
+        with:
+          gitea_host: "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
+          gitea_username: "ggball" #${{ secrets.GITEA_USERNAME }}
+          gitea_accesstoken: "bc65cc90c76baba247e753c95ef5721200e97b59"
+
