@@ -19,5 +19,5 @@ jobs:
       - name: commit-gitea # 提交gitea仓库
         uses: fnkr/github-action-git-bash@v1
         secrets: ${{secrets.GITHUB_TOKEN}}
-        args : ["bash","push-gitea.sh"]
+        args : bash push-gitea.sh
 
