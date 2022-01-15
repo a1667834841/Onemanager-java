@@ -6,6 +6,6 @@ codingUrl="https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
 
 git add .
 git commit -m "${msg}"
-git remote add origin $codingUrl
+git remote add gitea $codingUrl
 git show-ref
-git push "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git" master --force # 推送
+git push gitea master --force # 推送
