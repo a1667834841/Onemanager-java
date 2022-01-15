@@ -24,4 +24,11 @@ jobs:
           gitea_accesstoken: "bc65cc90c76baba247e753c95ef5721200e97b59"
           gh_username: "1667834841@qq.com"
           gh_accesstoken: ${{secrets.GITHUB_TOKEN}}
+          gitea_gist_prefix: "gist"
+          gitea_gist_surfix: ""
+          gistsSource: true
+          gistsStared: true
+          repositoryStared: true
+          repositorySource: true
+          repositoryForked: true
 
