@@ -4,7 +4,8 @@ RUN apk add git
 
 COPY . .
 
-RUN cd .github
+
+RUN echo $PWD
 
 RUN  chmod +x .github/actions/gitea-commit/entrypoint.sh
 
