@@ -9,6 +9,6 @@ WORKDIR /.github
 RUN echo $PWD
 
 
-RUN  chmod +x .github/actions/gitea-commit/entrypoint.sh
+RUN  chmod +x actions/gitea-commit/entrypoint.sh
 
-ENTRYPOINT ["/repo/.github/actions/gitea-commit/entrypoint.sh"]
+ENTRYPOINT ["actions/gitea-commit/entrypoint.sh"]
