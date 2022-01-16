@@ -17,15 +17,14 @@ jobs:
         uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
 
 
-      - name: commit repo
-        id: commit_repo
-        run: |
-          git config --global user.name "ggball"
-          git config --global user.email "1667834841@qq.com"
-          git init
-          git add -A
-          git commit -m "test"
-          git push -f https://ggball:bc65cc90c76baba247e753c95ef5721200e97b59@gitea.dongshanxia.top:35000/ggball/onemanager-java.git master
 
-
-
+     - name: Sync to Gitea
+       uses: wearerequired/git-mirror-action@master
+       env:
+         # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
+         SSH_PRIVATE_KEY: ${{ secrets.GITEA_PRIVATE_KEY }}
+       with:
+         # 注意替换为你的 GitHub 源仓库地址
+         source-repo: git@github.com:a1667834841/Onemanager-java.git
+         # 注意替换为你的 Gitee 目标仓库地址
+         destination-repo: git@gitea.dongshanxia.top:35000/:ggball/onemanager-java.git
