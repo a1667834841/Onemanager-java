@@ -45,7 +45,7 @@ jobs:
           ls -l ~/.ssh/
 
       - name: deploy
-        uses: mdallasanta/ssh-scp-deploy@@main
+        uses: mdallasanta/ssh-scp-deploy@main
         with:
           local: '/home/runner/work/Onemanager-java/Onemanager-java/target/oneManager-java.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
           remote: '/opt/jar'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
