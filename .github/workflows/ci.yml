@@ -21,5 +21,7 @@ jobs:
         with:
           node-version: 12 # 版本
       - name: build vue
-        run: ./build-vue.sh
+        run: |
+          chmod +x /build-vue.sh
+          ./build-vue.sh
 
