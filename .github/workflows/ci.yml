@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v1 # 作用：安装nodejs
         with:
           node-version: 12 # 版本
+
       - name: build vue
         run: |
           chmod +x /build-vue.sh
