@@ -26,3 +26,11 @@ jobs:
           chmod +x ./build-vue.sh
           ./build-vue.sh
 
+      - name: use maven
+        uses: stCarolas/setup-maven@v4.2
+        with:
+          maven-version: 3.8.2
+
+      - name: build java
+        run: cd - && mvn clean -DskipTests=true package
+
