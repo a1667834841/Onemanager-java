@@ -16,25 +16,25 @@ jobs:
       - name: checkout # 拉取代码
         uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
 
-#      - name: use node.js
-#        uses: actions/setup-node@v1 # 作用：安装nodejs
-#        with:
-#          node-version: 12 # 版本
-#
-#      - name: build vue
-#        run: |
-#          chmod +x ./build_vue.sh
-#          ./build_vue.sh
-#
-#      - name: use maven
-#        uses: stCarolas/setup-maven@v4.2
-#        with:
-#          maven-version: 3.8.2
-#
-#      - name: build java
-#        run: mvn clean -DskipTests=true package
+      - name: use node.js
+        uses: actions/setup-node@v1 # 作用：安装nodejs
+        with:
+          node-version: 12 # 版本
 
-      - name: Set SSH Environment
+      - name: build vue
+        run: |
+          chmod +x ./build_vue.sh
+          ./build_vue.sh
+
+      - name: use maven
+        uses: stCarolas/setup-maven@v4.2
+        with:
+          maven-version: 3.8.2
+
+      - name: build java
+        run: mvn clean -DskipTests=true package
+
+      - name: set SSH snvironment
         run: |
           mkdir -p ~/.ssh/
           echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
@@ -43,5 +43,20 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
           ls -l ~/.ssh/
+
+      - name: deploy
+        uses: mdallasanta/ssh-scp-deploy@{version}
+        with:
+          local: '/home/runner/work/Onemanager-java/Onemanager-java/target/oneManager-java.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
+          remote: '/opt/jar'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
+          port: ${{secrets.DEPLOY_PORT}}                                      # Remote server port - REQUIRED false - DEFAULT 22
+          user: ${{secrets.DEPLOY_USER}}                                      # Remote server user - REQUIRED true
+          password: ${{secrets.DEPLOY_PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
+          key: ${{secrets.ID_RSA}}                                        # Remote server private key - REQUIRED at least one of "password" or "key"
+          pre_upload: echo "This will be executed before the upload!"  # Command to run via ssh before scp upload - REQUIRED false
+          post_upload: echo "This will be executed after the upload!"  # Command to run via ssh after scp upload - REQUIRED false
+          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+          scp_options: -v
 
 
