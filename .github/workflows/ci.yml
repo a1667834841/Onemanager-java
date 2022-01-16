@@ -23,6 +23,6 @@ jobs:
 
       - name: build vue
         run: |
-          chmod +x /build-vue.sh
+          chmod +x ./build-vue.sh
           ./build-vue.sh
 
