@@ -1,0 +1,30 @@
+# action.yml
+name: 'commit gitea'
+description: 'commit repo to gitea'
+inputs:
+  username:  # username to use
+    description: 'Git username'
+    required: true
+  email:  # email
+    description: 'Git email'
+    required: true
+  repo:  # username to use
+    description: 'Git repository'
+    required: true
+  branch:  # username to use
+    description: 'Git branch'
+    required: true
+    default: 'master'
+
+outputs:
+  repo: 
+    description: 'Git repository'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.username }}
+    - ${{ inputs.email }}
+    - ${{ inputs.repo }}
+    - ${{ inputs.branch }}

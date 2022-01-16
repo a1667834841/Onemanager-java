@@ -16,14 +16,12 @@ jobs:
       - name: checkout # 拉取代码
         uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
 
-      - name: commit-gitea # 提交gitea仓库
-        id: remote_sha
-        uses: mego22/actions-git-sha@main
+      - name: commit repo
+        id: commit_repo
+        uses: ./.github/actions/commit
         with:
-          username: "ggball"
-          password: "xfFvaU5ACzp9kw6"
-          repo: "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
-          branch: "master"
-      - name: Print sha
-        run: echo "The sha is ${{ steps.remote_sha.outputs.sha }}"
+          repo: "https://github.com/mego22/dotfiles.git"
+
+      - name: print_outputs
+        run: echo "The repo is ${{ steps.commit_repo.outputs.repo }}"
 
