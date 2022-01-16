@@ -32,5 +32,5 @@ jobs:
           maven-version: 3.8.2
 
       - name: build java
-        run: cd - && mvn clean -DskipTests=true package
+        run: mvn clean -DskipTests=true package
 
