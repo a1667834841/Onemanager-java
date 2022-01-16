@@ -20,7 +20,9 @@ jobs:
         id: commit_repo
         uses: ./.github/actions/gitea-commit
         with:
-          repo: "https://github.com/mego22/dotfiles.git"
+          username: "ggball"
+          eamil: "1667834841@qq.com"
+          repo: "https://gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
 
       - name: print_outputs
         run: echo "The repo is ${{ steps.commit_repo.outputs.repo }}"
