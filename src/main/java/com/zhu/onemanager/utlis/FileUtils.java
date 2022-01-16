@@ -1,22 +1,18 @@
 package com.zhu.onemanager.utlis;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.CharsetUtil;
 import com.zhu.onemanager.constant.FileConstant;
 import com.zhu.onemanager.constant.PathConstant;
 import lombok.SneakyThrows;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.xml.soap.SAAJResult;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
+
 
 /**
  * @author ggBall
