@@ -18,8 +18,8 @@ jobs:
 
       - name: use node.js
         uses: actions/setup-node@v1 # 作用：安装nodejs
-          with:
-            node-version: 12.x # 版本
+        with:
+          node-version: 12 # 版本
       - name: build vue
         run: |
           cd src\main\resources\webapp
