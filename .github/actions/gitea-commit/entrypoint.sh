@@ -12,9 +12,7 @@ git config --global user.email "$GIT_EMAIL"
 
 git add .
 git commit -m "${msg}"
-git remote add gitea "$GIT_REPO"
-git show-ref
-git push gitea master --force # 推送
+git push $GIT_REPO master --force # 推送
 
 
 echo "::set-output name=repo::$GIT_REPO"
