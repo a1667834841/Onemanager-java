@@ -4,9 +4,9 @@ RUN apk add git
 
 COPY . .
 
-WORKDIR /.github
+WORKDIR /.github/actions/gitea-commit
 
 RUN echo $PWD
-RUN  chmod +x ./actions/gitea-commit/entrypoint.sh
+RUN  chmod +x entrypoint.sh
 
-ENTRYPOINT ["./actions/gitea-commit/entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
