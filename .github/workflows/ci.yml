@@ -23,5 +23,5 @@ jobs:
       - name: build vue
         run: |
           echo $PATH
-          cd src\main\resources\webapp
+          cd src/main/resources/webapp
           npm run build-prod
