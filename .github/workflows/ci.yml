@@ -16,15 +16,11 @@ jobs:
       - name: checkout # 拉取代码
         uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
 
-
-
-      - name: Sync to Gitea
-        uses: wearerequired/git-mirror-action@master
-        env:
-         # 注意在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
-         SSH_PRIVATE_KEY: ${{ secrets.GITEA_PRIVATE_KEY }}
-        with:
-          # 注意替换为你的 GitHub 源仓库地址
-          source-repo: git@github.com:a1667834841/Onemanager-java.git
-          # 注意替换为你的 Gitee 目标仓库地址
-          destination-repo: git@gitea.dongshanxia.top:35000/:ggball/onemanager-java.git
+      - name: use node.js
+        uses: actions/setup-node@v1 # 作用：安装nodejs
+          with:
+            node-version: 12.x # 版本
+      - name: build vue
+        run: |
+          cd src\main\resources\webapp
+          npm run build-prod
