@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/actions/gitea-commit
         with:
           username: "ggball"
-          eamil: "1667834841@qq.com"
+          email: "1667834841@qq.com"
           repo: "https://ggball:bc65cc90c76baba247e753c95ef5721200e97b59@gitea.dongshanxia.top:35000/ggball/onemanager-java.git"
 
       - name: print_outputs

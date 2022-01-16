@@ -12,7 +12,7 @@ git config --global user.email "$GIT_EMAIL"
 
 git add .
 git commit -m "${msg}"
-git push $GIT_REPO master --force # 推送
+git push -f $GIT_REPO master
 
 
 echo "::set-output name=repo::$GIT_REPO"
