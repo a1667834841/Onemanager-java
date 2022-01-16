@@ -21,7 +21,5 @@ jobs:
         with:
           node-version: 12 # 版本
       - name: build vue
-        run: |
-          echo $PATH
-          cd src/main/resources/webapp
-          npm run build-prod
+        run: ./build-vue.sh
+
