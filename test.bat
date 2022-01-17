@@ -9,7 +9,7 @@ git push -f https://ggball:bc65cc90c76baba247e753c95ef5721200e97b59@gitea.dongsh
 
 AUTHORIZED_KEYS  ID_RSA  ID_RSA.PUB  KNOWN_HOSTS
 
-java -jar  oneManager-java.jar --spring.profiles.active=prod
+java -jar  oneManager-java.jar --spring.profiles.active=prod &
 
 
 git config --global user.name "ggball"

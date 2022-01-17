@@ -24,6 +24,10 @@ docker run -p 8081:8081 --rm -d --name onemanager-java ggball/onemanager-java:1.
 
 用浏览器打开 `http://localhost:8081/`
 
+### demo
+[演示站](https://ggball.top/oneManagerjava#/)
+
+
 
 ### TODO
 

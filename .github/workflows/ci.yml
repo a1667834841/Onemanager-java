@@ -34,6 +34,17 @@ jobs:
       - name: build java
         run: mvn clean -DskipTests=true package
 
+      - name: sync repo to CODING
+        uses: serverlesslife-cn/sync-repo-to-coding@master
+        env:
+          # 在 GitHub Settings->Secrets 配置 CODING_PRIVATE_KEY
+          SSH_PRIVATE_KEY: ${{ secrets.ID_RSA }}
+        with:
+          # 注意替换为你的 GitHub 源仓库地址
+          github-repo: "git@github.com:a1667834841/Onemanager-java.git"
+          # 注意替换为你的 CODING 目标仓库地址
+          coding-repo: "git@e.coding.net:ggball/onemanager-java/Onemanager-java.git"
+
 #      - name: set SSH snvironment
 #        run: |
 #          mkdir -p ~/.ssh/
