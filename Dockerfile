@@ -4,7 +4,7 @@ MAINTAINER 1667834841@qq.com
 # 环境变量
 ENV JAR_NAME JoneManager-java.jar
 ENV WORK_PATH /opt/jar
-ENV ENV_TYPE dev
+ARG ENV_TYPE=dev
 
 
 RUN mkdir ${WORK_PATH}
