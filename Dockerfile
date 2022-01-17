@@ -2,21 +2,18 @@ FROM openjdk:8-jdk-slim
 MAINTAINER 1667834841@qq.com
 
 # 环境变量
-ARG JAR_NAME=oneManager-java.jar
-ARG WORK_PATH=/opt/jar
-ARG ENV_TYPE=dev
-ENV JAR_NAME JAR_NAME
-ENV WORK_PATH WORK_PATH
-ENV ENV_TYPE ENV_TYPE
+ENV JAR_NAME JoneManager-java.jar
+ENV WORK_PATH /opt/jar
+ENV ENV_TYPE dev
 
 
-RUN mkdir /opt/jar
+RUN mkdir ${WORK_PATH}
 
-WORKDIR /opt/jar
+WORKDIR ${WORK_PATH}
 
-COPY ./target/oneManager-java.jar /opt/jar/oneManager-java.jar
+COPY ./target/oneManager-java.jar ${WORK_PATH}/${JAR_NAME}
 
 EXPOSE 8081
 
-CMD java -jar /opt/jar/oneManager-java.jar --spring.profiles.active=dev
+CMD java -jar ${WORK_PATH}/${JAR_NAME} --spring.profiles.active=${ENV_TYPE}
 
