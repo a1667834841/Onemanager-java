@@ -45,6 +45,7 @@ jobs:
           # 注意替换为你的 CODING 目标仓库地址
           coding-repo: "git@e.coding.net:ggball/onemanager-java/Onemanager-java.git"
 
+
 #      - name: set SSH snvironment
 #        run: |
 #          mkdir -p ~/.ssh/
