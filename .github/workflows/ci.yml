@@ -34,25 +34,33 @@ jobs:
 #      - name: build java
 #        run: mvn clean -DskipTests=true package
 
-      - name: sync repo to CODING
-        uses: wearerequired/git-mirror-action@v1.2.0
-        env:
-          # 在 GitHub Settings->Secrets 配置 CODING_PRIVATE_KEY
-          SSH_PRIVATE_KEY: ${{ secrets.CODING_ID_RSA }}
-        with:
-          source-repo: "git@github.com:a1667834841/Onemanager-java.git"
-          destination-repo: "git@e.coding.net:ggball/onemanager-java/Onemanager-java.git"
+#      - name: sync repo to CODING
+#        uses: wearerequired/git-mirror-action@v1.2.0
+#        env:
+#          # 在 GitHub Settings->Secrets 配置 CODING_PRIVATE_KEY
+#          SSH_PRIVATE_KEY: ${{ secrets.CODING_ID_RSA }}
+#        with:
+#          source-repo: "git@github.com:a1667834841/Onemanager-java.git"
+#          destination-repo: "git@e.coding.net:ggball/onemanager-java/Onemanager-java.git"
 
 
-#      - name: set SSH snvironment
-#        run: |
-#          mkdir -p ~/.ssh/
-#          echo "${{ secrets.CODING_ID_RSA }}" > ~/.ssh/id_rsa
-#          echo "${{ secrets.CODING_ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
-#          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-#          chmod 600 ~/.ssh/id_rsa
-#          chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
-#          ls -l ~/.ssh/
+      - name: set SSH snvironment
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.CODING_ID_RSA }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.CODING_ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
+          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+          chmod 600 ~/.ssh/id_rsa
+          chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
+          ls -l ~/.ssh/
+
+      - name: sync to coding
+        run: |
+          git remote rm origin
+          git remote add origin git@e.coding.net:ggball/onemanager-java/Onemanager-java.git
+          git config user.name ggball
+          git config user.email 1667834841@qq.com
+          git push -f origin master
 #
 #      - name: deploy
 #        uses: mdallasanta/ssh-scp-deploy@main
