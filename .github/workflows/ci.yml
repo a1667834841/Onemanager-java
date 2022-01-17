@@ -44,15 +44,20 @@ jobs:
 #          destination-repo: "git@e.coding.net:ggball/onemanager-java/Onemanager-java.git"
 
 
-      - name: set SSH snvironment
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.CODING_ID_RSA }}" > ~/.ssh/id_rsa
-          echo "${{ secrets.CODING_ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
-          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/id_rsa
-          chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
-          ls -l ~/.ssh/
+#      - name: set SSH snvironment
+#        run: |
+#          mkdir -p ~/.ssh/
+#          echo "${{ secrets.CODING_ID_RSA }}" > ~/.ssh/id_rsa
+#          echo "${{ secrets.CODING_ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
+#          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+#          chmod 600 ~/.ssh/id_rsa
+#          chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
+#          ls -l ~/.ssh/
+      - name: Install SSH Key # use this action on https://github.com/shimataro/ssh-key-action to install coding.net ssh key on running environment
+        uses: shimataro/ssh-key-action@v2.2.0
+        with:
+          key: ${{ secrets.CODING_ID_RSA }}
+          known_hosts: ${{ secrets.CODING_HOSTS }}
 
       - name: sync to coding
         run: |
@@ -60,8 +65,6 @@ jobs:
           git remote add origin git@e.coding.net:ggball/onemanager-java/Onemanager-java.git
           git config user.name ggball
           git config user.email 1667834841@qq.com
-          git add .
-          git commit -m 'test'
           git push -f origin
 #
 #      - name: deploy
