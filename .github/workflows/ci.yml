@@ -47,8 +47,8 @@ jobs:
 #      - name: set SSH snvironment
 #        run: |
 #          mkdir -p ~/.ssh/
-#          echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
-#          echo "${{ secrets.ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
+#          echo "${{ secrets.CODING_ID_RSA }}" > ~/.ssh/id_rsa
+#          echo "${{ secrets.CODING_ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
 #          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 #          chmod 600 ~/.ssh/id_rsa
 #          chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
