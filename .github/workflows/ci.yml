@@ -16,23 +16,23 @@ jobs:
       - name: checkout # 拉取代码
         uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
 
-      - name: use node.js
-        uses: actions/setup-node@v1 # 作用：安装nodejs
-        with:
-          node-version: 12 # 版本
-
-      - name: build vue # 编译vue代码
-        run: |
-          chmod +x ./build_vue.sh
-          ./build_vue.sh
-
-      - name: use maven
-        uses: stCarolas/setup-maven@v4.2
-        with:
-          maven-version: 3.8.2
-
-      - name: build java
-        run: mvn clean -DskipTests=true package
+#      - name: use node.js
+#        uses: actions/setup-node@v1 # 作用：安装nodejs
+#        with:
+#          node-version: 12 # 版本
+#
+#      - name: build vue # 编译vue代码
+#        run: |
+#          chmod +x ./build_vue.sh
+#          ./build_vue.sh
+#
+#      - name: use maven
+#        uses: stCarolas/setup-maven@v4.2
+#        with:
+#          maven-version: 3.8.2
+#
+#      - name: build java
+#        run: mvn clean -DskipTests=true package
 
       - name: sync repo to CODING
         uses: serverlesslife-cn/sync-repo-to-coding@master
