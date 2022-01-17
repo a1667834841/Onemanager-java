@@ -65,7 +65,8 @@ jobs:
           git remote add origin git@e.coding.net:ggball/onemanager-java/Onemanager-java.git
           git config user.name ggball
           git config user.email 1667834841@qq.com
-          git push -f origin
+          git branch -a
+          git push -f origin HEAD:master
 #
 #      - name: deploy
 #        uses: mdallasanta/ssh-scp-deploy@main
