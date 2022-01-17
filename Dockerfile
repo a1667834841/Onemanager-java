@@ -9,11 +9,11 @@ ENV WORK_PATH=/opt/jar
 ENV ENV_TYPE=${ENV_TYPE}
 
 
-RUN mkdir ${JAR_NAME}
+RUN mkdir ${WORK_PATH}
 
-WORKDIR ${JAR_NAME}
+WORKDIR ${WORK_PATH}
 
-COPY ./target/oneManager-java.jar ${JAR_NAME}/${WORK_PATH}
+COPY ./target/oneManager-java.jar ${WORK_PATH}/${JAR_NAME}
 
 EXPOSE 8081
 
