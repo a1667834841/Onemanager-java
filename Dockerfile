@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-slim
 MAINTAINER 1667834841@qq.com
 
 # 环境变量
-ARG JAR_NAME_ARG=JoneManager-java.jar
+ARG JAR_NAME_ARG=oneManager-java.jar
 ARG WORK_PATH_ARG=/opt/jar
 # 用于接收参数
 ARG ENV_TYPE=dev
