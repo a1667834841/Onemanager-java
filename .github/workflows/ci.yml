@@ -38,7 +38,7 @@ jobs:
         uses: wearerequired/git-mirror-action@v1.2.0
         env:
           # 在 GitHub Settings->Secrets 配置 CODING_PRIVATE_KEY
-          SSH_PRIVATE_KEY: ${{ secrets.ID_RSA }}
+          SSH_PRIVATE_KEY: ${{ secrets.CODING_ID_RSA }}
         with:
           source-repo: "git@github.com:a1667834841/Onemanager-java.git"
           destination-repo: "git@e.coding.net:ggball/onemanager-java/Onemanager-java.git"
