@@ -2,17 +2,20 @@ FROM openjdk:8-jdk-slim
 MAINTAINER 1667834841@qq.com
 
 # 环境变量
-ENV JAR_NAME JoneManager-java.jar
-ENV WORK_PATH /opt/jar
+ARG JAR_NAME_ARG=JoneManager-java.jar
+ARG WORK_PATH_ARG=/opt/jar
+# 用于接收参数
 ARG ENV_TYPE=dev
-ENV ENV_TYPE ${ENV_TYPE}
+ENV JAR_NAME=${JAR_NAME_ARG}
+ENV WORK_PATH=${WORK_PATH_ARG}
+ENV ENV_TYPE=${ENV_TYPE}
 
 
-RUN mkdir ${WORK_PATH}
+RUN mkdir ${JAR_NAME_ARG}
 
-WORKDIR ${WORK_PATH}
+WORKDIR ${JAR_NAME_ARG}
 
-COPY ./target/oneManager-java.jar ${WORK_PATH}/${JAR_NAME}
+COPY ./target/oneManager-java.jar ${JAR_NAME_ARG}/${WORK_PATH_ARG}
 
 EXPOSE 8081
 
