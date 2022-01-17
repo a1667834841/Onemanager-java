@@ -49,6 +49,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.CODING_ID_RSA }}" > ~/.ssh/id_rsa
           echo "${{ secrets.CODING_ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
+          echo "${{ secrets.CODING_HOSTS}}" > ~/.ssh/konwn_hosts
           cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
           chmod 600 ~/.ssh/id_rsa
           chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
