@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           cache: 'npm'
+          cache-dependency-path: src/main/resources/webapp/package-lock.json
           node-version: 12 # 版本
       - run: |
           chmod +x ./build_vue.sh
