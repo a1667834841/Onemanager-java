@@ -34,29 +34,29 @@ jobs:
       - name: build java
         run: mvn clean -DskipTests=true package
 
-      - name: set SSH snvironment
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
-          echo "${{ secrets.ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
-          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/id_rsa
-          chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
-          ls -l ~/.ssh/
-
-      - name: deploy
-        uses: mdallasanta/ssh-scp-deploy@main
-        with:
-          local: '/home/runner/work/Onemanager-java/Onemanager-java/target/oneManager-java.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
-          remote: '/opt/jar'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
-          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
-          port: ${{secrets.DEPLOY_PORT}}                                      # Remote server port - REQUIRED false - DEFAULT 22
-          user: ${{secrets.DEPLOY_USER}}                                      # Remote server user - REQUIRED true
-          password: ${{secrets.DEPLOY_PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
-          key: ${{secrets.ID_RSA}}                                        # Remote server private key - REQUIRED at least one of "password" or "key"
-          pre_upload: echo "This will be executed before the upload!"  # Command to run via ssh before scp upload - REQUIRED false
-          post_upload: echo "This will be executed after the upload!"  # Command to run via ssh after scp upload - REQUIRED false
-          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-          scp_options: -v
+#      - name: set SSH snvironment
+#        run: |
+#          mkdir -p ~/.ssh/
+#          echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
+#          echo "${{ secrets.ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
+#          cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+#          chmod 600 ~/.ssh/id_rsa
+#          chmod 700 ~/.ssh && chmod 700 ~/.ssh/*
+#          ls -l ~/.ssh/
+#
+#      - name: deploy
+#        uses: mdallasanta/ssh-scp-deploy@main
+#        with:
+#          local: '/home/runner/work/Onemanager-java/Onemanager-java/target/oneManager-java.jar'                                                  # Local file path - REQUIRED false - DEFAULT ./
+#          remote: '/opt/jar'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+#          host: ${{secrets.DEPLOY_HOST}}                                      # Remote server address - REQUIRED true
+#          port: ${{secrets.DEPLOY_PORT}}                                      # Remote server port - REQUIRED false - DEFAULT 22
+#          user: ${{secrets.DEPLOY_USER}}                                      # Remote server user - REQUIRED true
+#          password: ${{secrets.DEPLOY_PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key"
+#          key: ${{secrets.ID_RSA}}                                        # Remote server private key - REQUIRED at least one of "password" or "key"
+#          pre_upload: echo "This will be executed before the upload!"  # Command to run via ssh before scp upload - REQUIRED false
+#          post_upload: echo "This will be executed after the upload!"  # Command to run via ssh after scp upload - REQUIRED false
+#          ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+#          scp_options: -v
 
 
