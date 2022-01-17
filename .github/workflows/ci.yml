@@ -35,7 +35,7 @@ jobs:
 #        run: mvn clean -DskipTests=true package
 
       - name: sync repo to CODING
-        uses: serverlesslife-cn/sync-repo-to-coding@master
+        uses: serverlesslife-cn/sync-repo-to-coding@v1.1
         env:
           # 在 GitHub Settings->Secrets 配置 CODING_PRIVATE_KEY
           SSH_PRIVATE_KEY: ${{ secrets.ID_RSA }}
