@@ -2,12 +2,10 @@ FROM openjdk:8-jdk-slim
 MAINTAINER 1667834841@qq.com
 
 # 环境变量
-ARG JAR_NAME_ARG=oneManager-java.jar
-ARG WORK_PATH_ARG=/opt/jar
 # 用于接收参数
 ARG ENV_TYPE=dev
-ENV JAR_NAME=${JAR_NAME_ARG}
-ENV WORK_PATH=${WORK_PATH_ARG}
+ENV JAR_NAME=oneManager-java.jar
+ENV WORK_PATH=/opt/jar
 ENV ENV_TYPE=${ENV_TYPE}
 
 
