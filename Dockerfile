@@ -10,13 +10,13 @@ ENV WORK_PATH WORK_PATH
 ENV ENV_TYPE ENV_TYPE
 
 
-RUN mkdir $WORK_PATH
+RUN mkdir /opt/jar
 
-WORKDIR ${WORK_PATH}
+WORKDIR /opt/jar
 
-COPY ./target/oneManager-java.jar ${WORK_PATH}/${JAR_NAME}
+COPY ./target/oneManager-java.jar /opt/jar/oneManager-java.jar
 
 EXPOSE 8081
 
-CMD java -jar ${WORK_PATH}/${JAR_NAME} --spring.profiles.active=${ENV_TYPE}
+CMD java -jar /opt/jar/oneManager-java.jar --spring.profiles.active=dev
 
